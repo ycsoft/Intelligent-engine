@@ -9,6 +9,8 @@ import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 
+import { AngularEchartsModule } from 'ngx-echarts';
+
 import {AppComponent} from './app.component';
 import {SearchComponent} from '../pages/search/search.component';
 import {ResultComponent} from '../pages/result/result.component';
@@ -24,6 +26,7 @@ import {ResultComponent} from '../pages/result/result.component';
         FormsModule,
         HttpModule,
         AppRoutingModule,
+        AngularEchartsModule,
         AlertModule.forRoot(),
         TypeaheadModule.forRoot(),
         ButtonsModule.forRoot(),
