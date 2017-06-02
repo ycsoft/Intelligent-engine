@@ -1,1 +1,91 @@
-<div>result</div>
+<div class="free-case">
+    <h3>维度</h3>
+    <p>
+        —  文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字。<br>
+        —  文字文字文字文字文字文字文字文字文字文字文字文字。
+    </p>
+</div>
+<div class="case-demonstrate">
+    <button type="button" class="btn btn-primary" (click)="isHidden = !isHidden">案例演示</button>
+    <div [hidden]="isHidden">
+        <tabset>
+            <tab heading="雅氏"></tab>
+            <tab heading="普树咖啡"></tab>
+            <tab heading="恒寿堂"></tab>
+        </tabset>
+    </div>
+</div>
+<tabset>
+    <tab heading="按维度购买">
+        <div class="list">
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">维度二</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+        </div>
+    </tab>
+    <tab heading="完整报告">
+        <div class="list">
+            <div class="item">
+                <div class="inner-left">
+                    <span><input type="checkbox">完整报告</span>
+                    <span>购买以查看详细策略</span>
+                </div>
+                <div class="inner-right">
+                    ￥1800.00
+                </div>
+            </div>
+        </div>
+    </tab>
+</tabset>
+

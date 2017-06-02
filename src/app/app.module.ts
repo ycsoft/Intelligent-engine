@@ -7,6 +7,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AlertModule} from 'ngx-bootstrap';
 import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {TabsModule} from 'ngx-bootstrap/tabs';
 
 import {AppComponent} from './app.component';
 import {SearchComponent} from '../pages/search/search.component';
@@ -25,7 +26,8 @@ import {ResultComponent} from '../pages/result/result.component';
         AppRoutingModule,
         AlertModule.forRoot(),
         TypeaheadModule.forRoot(),
-        ButtonsModule.forRoot()
+        ButtonsModule.forRoot(),
+        TabsModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

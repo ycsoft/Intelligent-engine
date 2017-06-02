@@ -9,7 +9,8 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "build:prod": "ng build --prod --env=prod"
+    "build:prod": "ng build --prod --env=prod",
+    "serve": "lite-server -c=bs-config.json"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,7 @@
     "@angular/router": "^4.1.3",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "lite-server": "^2.3.0",
     "ngx-bootstrap": "^1.6.6",
     "ngx-resource": "^2.2.1",
     "rxjs": "^5.4.0",
@@ -45,6 +47,6 @@
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "~2.0.3"
+    "typescript": "~2.3.4"
   }
 }
