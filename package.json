@@ -9,8 +9,7 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "build:prod": "ng build --prod --env=prod",
-    "serve": "lite-server -c=bs-config.json"
+    "build:prod": "ng build --prod --env=prod"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +24,6 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "echarts": "^3.6.1",
-    "lite-server": "^2.3.0",
     "ngx-bootstrap": "^1.7.0",
     "ngx-echarts": "^1.2.1",
     "ngx-resource": "^2.2.1",
