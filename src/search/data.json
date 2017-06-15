@@ -1,0 +1,263 @@
+[
+    {
+        "small": "睡眠",
+        "content": "喜欢早起，在早晨做事",
+        "free": 1,
+        "strategy": [
+            {
+                "manner": "比较偏好早上时间，限时优惠时间段可以设置在早上，以促进销售转化",
+                "main": "促销",
+                "sub": "限时促销"
+            },
+            {
+                "manner": "早晨话题，如：如何早起、早起做什么等",
+                "main": "沟通",
+                "sub": "沟通主题"
+            },
+            {
+                "manner": "比较偏好早起，在上午进行沟通，以提高沟通的效果",
+                "main": "沟通",
+                "sub": "沟通时机"
+            },
+            {
+                "manner": "比较偏好早上，生日祝福、产品促销等相关信息可以在相对较早的时间发送，以提高首现价值",
+                "main": "沟通",
+                "sub": "互动时间"
+            }
+        ],
+        "price": 1800,
+        "rule_id": "9"
+    },
+    {
+        "small": "消费偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "52"
+    },
+    {
+        "small": "社交网络",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "130"
+    },
+    {
+        "small": "手机使用",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "442"
+    },
+    {
+        "small": "旅游",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "490"
+    },
+    {
+        "small": "价值观",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "651"
+    },
+    {
+        "small": "投资理财",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "782"
+    },
+    {
+        "small": "阅读偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "804"
+    },
+    {
+        "small": "风格偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "955"
+    },
+    {
+        "small": "思维方式",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1170"
+    },
+    {
+        "small": "性格",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1184"
+    },
+    {
+        "small": "人际关系",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1187"
+    },
+    {
+        "small": "语言习惯",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1230"
+    },
+    {
+        "small": "品牌认知",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1294"
+    },
+    {
+        "small": "饮食",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1328"
+    },
+    {
+        "small": "宗教思想",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1787"
+    },
+    {
+        "small": "运动锻炼",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r2164"
+    },
+    {
+        "small": "影视剧偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r2404"
+    },
+    {
+        "small": "学业能力",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r866"
+    },
+    {
+        "small": "家庭关系",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r930"
+    },
+    {
+        "small": "休闲娱乐",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r965"
+    },
+    {
+        "small": "影视剧偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r2405"
+    },
+    {
+        "small": "饮食",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r49"
+    },
+    {
+        "small": "语言习惯",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1643"
+    },
+    {
+        "small": "性格",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r1379"
+    },
+    {
+        "small": "思维方式",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r989"
+    },
+    {
+        "small": "风格偏好",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "1078"
+    },
+    {
+        "small": "价值观",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "652"
+    },
+    {
+        "small": "旅游",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "733"
+    },
+    {
+        "small": "手机使用",
+        "content": "",
+        "free": 0,
+        "strategy": [],
+        "price": 1800,
+        "rule_id": "r328"
+    }
+]

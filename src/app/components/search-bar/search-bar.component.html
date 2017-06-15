@@ -1,0 +1,10 @@
+<div class="search-bar">
+  <div class="search-container">
+    <div class="search-input">
+      <input type="text" placeholder="请输入您需要查询的特征" [(ngModel)]="keywords" (keypress)="keypress($event)">
+      <div class="search-img" (click)="submit()">
+        <img src="assets/images/icon_search.png">
+      </div>
+    </div>
+  </div>
+</div>

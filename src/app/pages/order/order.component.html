@@ -1,0 +1,162 @@
+<app-logo>
+</app-logo>
+<div class="order-state">
+    <div class="state">
+        <div class="state-left">
+            <div class="img-box">
+                <img src="assets/images/icon_order_active.png">
+            </div>
+            <span>订单确认</span>
+        </div>
+        <div class="state-right">
+            <div class="box"></div>
+            <div class="corner"></div>
+        </div>
+    </div>
+    <div class="dsahed-line"></div>
+    <div class="state">
+        <div class="state-left">
+            <div class="img-box">
+                <img src="assets/images/icon_payment_inactive.png">
+            </div>
+            <span>支付成功</span>
+        </div>
+    </div>
+    <div class="dsahed-line"></div>
+    <div class="state">
+        <div class="state-left">
+            <div class="img-box">
+                <img src="assets/images/order_report_inactive.png">
+            </div>
+            <span>查看报告</span>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+    <app-search-bar [keywords]="keywords" (onChange)="search($event)"></app-search-bar>
+    <div class="result-container">
+        <div class="result-container1">
+            <div class="result-container2">
+                <div class="order-info">
+                    <div class="title">
+                        <span>订单信息</span>
+                    </div>
+                    <div class="content">
+                        <div class="content-left">
+                            <div echarts [options]="chartOption" class="main-chart"></div>
+                        </div>
+                        <div class="content-right">
+                            <div class="item" *ngFor="let item of chartlist">
+                                <div echarts [options]="item.chartOption" class="main-chart item-left"></div>
+                                <div class="item-right">
+                                    <div class="line1">
+                                        <h1>{{item.name}}</h1>
+                                        <span class="price"><span [ngClass]="{'price-free':item.free}">{{item.price | rmb}}</span>{{item.free?'(免费)':''}}</span>
+                                    </div>
+                                    <div class="line2">购买以查看详细策略</div>
+                                </div>
+                            </div>
+                            <div class="item total">
+                                <span>总价：<span class="price">{{totalMoney | rmb}}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="address-info">
+                    <div class="title">
+                        <span>收货信息</span>
+                    </div>
+                    <form class="content" #orderForm="ngForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="电子邮件" [(ngModel)]="order.email" name="email" appEmail required>
+                            <label class="tip">必填项：购买成功后我们将会发送报告至您的邮箱</label>
+                        </div>
+                        <div class="invoice-choice">
+                            <app-check class="blue" [isChecked]="order.invoice" (onChange)="order.invoice=!order.invoice"></app-check>
+                            <span>申请发票</span>
+                            <span>（开票金额为用户实际支付金额）</span>
+                        </div>
+                        <div class="invoice" *ngIf="order.invoice">
+                            <div class="radio-grooup">
+                                <label for="radio1"><app-radio [isChecked]="order.inv.type==='common'" (onChange)="order.inv.type='common'" class="blue">普通发票</app-radio></label>
+                                <label for="radio2"><app-radio [isChecked]="order.inv.type==='addedValueTax'" (onChange)="order.inv.type='addedValueTax'" class="blue">增值税发票</app-radio></label>
+                            </div>
+                            <div class="panel1" *ngIf="order.inv.type==='common'">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="发票抬头" [(ngModel)]="order.inv.header"  name="inv.header" >
+                                </div>
+
+                            </div>
+                            <div class="panel3" *ngIf="order.inv.type==='addedValueTax'">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="单位全称" [(ngModel)]="order.company_name" name="company_name" >
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="单位地址" [(ngModel)]="order.company_addr" name="company_addr" >
+                                </div>
+                                <div class="line">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="银行账号" [(ngModel)]="order.bank_account" name="bank_account" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="开户行" [(ngModel)]="order.open_bank" name="open_bank" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="税务登记号" [(ngModel)]="order.tax_no" name="company_name" >
+                                </div>
+                            </div>
+                            <div class="panel2">
+                                <div class="address-title">
+                                    <span>发票寄送地址</span>
+                                    <span>（纸质发票会再2-3个工作日内寄出）</span>
+                                </div>
+
+                                <div class="line1">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="联系人" [(ngModel)]="order.contacts" name="contacts" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="手机号码" [(ngModel)]="order.phone" name="phone"  appMobile>
+                                    </div>
+                                </div>
+                                <div class="line2">
+                                    <div class="form-group">
+                                        <select appSelect class="selectpicker form-control" [(ngModel)]="order.province" name="province" >
+                                            <option>--省--</option>
+                                            <option>上海市</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select appSelect class="selectpicker form-control" [(ngModel)]="order.city" name="city" >
+                                            <option selected>--市--</option>
+                                            <option>上海市</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="width:100%">
+                                        <input type="text" class="form-control" placeholder="请填写详细地址" [(ngModel)]="order.address" name="address" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="pay-way">
+                    <div class="title">
+                        <span>订单信息</span>
+                    </div>
+                    <div class="content">
+                        <div class="pay-way-img">
+                            <img src="assets/images/icon_zfb.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>
+                    <button type="button" class="btn btn-red" (click)="submitOrder()" [disabled]="orderForm.invalid">提交订单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fra+</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'CenturyGothic', "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        input[placeholder] {
+            color: #666;
+        }
+
+        .search-box > input {
+            border: none;
+            outline: none;
+            font-size:18px;
+            margin-left:15px;
+            width: 90%;
+            height: 42px;
+            color: #333;
+        }
+
+        input:hover {
+            outline: 0;
+        }
+        .content{
+            margin-top: 10%;
+            text-align: center;
+            width: 100%;
+        }
+        .content > div{
+            width: 600px;
+            text-align: left;
+            margin: auto;
+        }
+        .search-box{
+            border: 4px solid #001cb9;
+            border-radius: 25px;
+            width: 600px;
+            height: 50px;
+            margin: auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .search-box > img{
+            transition: transform 0.2s;
+            transform: scale(1);
+            cursor: pointer;
+        }
+        .search-box > img:hover{
+            transform: scale(1.1);
+        }
+        .search-box:hover{
+            box-shadow: 2px 2px 7px #888888;
+        }
+        .logo{
+            margin-top:10%;
+            text-align:center;
+            width:100%;
+        }
+        .logo>img{
+            transition: transform 0.2s;
+        }
+        .logo>img:hover{
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo">
+        <img src="logo_index.png">
+    </div>
+    <div class="content">
+        <div>
+            <div class="search-box">
+                <input id="search" type="text" placeholder="请输入您需要查询的特征" onkeypress="keyPress(event)">
+                <img src="icon_search.png" onclick="searchInput()">
+            </div>
+            <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;">@Copyright UniDI All rights reserved.</p>
+        </div>
+    </div>
+    <script>
+        var search = function(){
+            var searchInput = document.getElementById('search');
+            var keywords = searchInput && searchInput.value;
+            if(keywords){
+                location.href = 'http://www.baidu.com';
+            }
+        }
+        var keyPress = function(event){
+            if(event.keyCode === 13){
+                search();
+            }
+        }
+    </script>
+</body>
+
+</html>

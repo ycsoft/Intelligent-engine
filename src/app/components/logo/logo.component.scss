@@ -1,0 +1,14 @@
+.logo{
+    position: absolute;
+    left: 0;
+    width: 80px;
+    background-color: #0036fc;
+    height: 100%;
+    .logo-container{
+        width: 100%;
+        padding: 20px;
+        img {
+            width: 100%;
+        }
+    }
+}

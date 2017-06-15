@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-    url: 'http://test.i-cambio.com'
+    url: 'http://10.200.187.166:8888'
 };

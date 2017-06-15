@@ -1,0 +1,32 @@
+.search-bar{
+    width: 100%;
+    height: 64px;
+    position: absolute;
+    left: 0;
+    padding-left: 80px;
+    .search-container{
+        background-color: #f2f5ff;
+        .search-input{
+            background-color: #e6ebff;
+            width: 500px;
+            height: 100%;
+            padding-left: 50px;
+            display: flex;
+            input{
+                border: none;
+                background-color: transparent;
+                width: 100%;
+                outline: none;
+                font-size: 15px;
+                color: #999999;
+            }
+            .search-img{
+                height: 100%;
+                padding-right: 50px;
+                img{
+                    margin: 100%;
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.28.3",
-    "name": "ng2-angular2"
+    "name": "Fra+"
   },
   "apps": [
     {
@@ -19,10 +19,14 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
+        "assets/styles/fonts.css",
         "styles.scss"
       ],
       "scripts": [
-        "../node_modules/echarts/dist/echarts.min.js"
+        "../node_modules/echarts/dist/echarts.min.js",
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
