@@ -12,14 +12,19 @@
             width: 100%;
         }
     }
-    .main-detail{
+
+}
+
+.main-detail{
         width: 600px;
-        min-width: 600px;
-        max-width: 600px;
         height: 100%;
         display: flex;
         z-index: 1;
         background: #ffffff;
+        position: absolute;
+        height: 100%;
+        right: 0px;
+        top: 0px;
         .expansion-btn{
             width: 20px;
             min-width: 20px;
@@ -228,4 +233,3 @@
             }
         }
     }
-}

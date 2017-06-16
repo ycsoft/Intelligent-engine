@@ -1,11 +1,12 @@
 <app-logo></app-logo>
-<div class="main-container">
+<div class="main-container" style="overflow: hidden;">
     <app-search-bar [keywords]="keywords" (onChange)="search($event)"></app-search-bar>
-    <div class="result-container">
+    <div class="result-container" [ngStyle]="{width:resultState==='active'?'60%':'100%'}">
         <div class="result-container-1">
             <div echarts [options]="chartOption" (chartInit)="onChartInit($event)" (chartClick)="onChartClick($event)" class="main-chart"></div>
         </div>
-        <div class="main-detail" [@resultState]="resultState">
+    </div>
+    <div class="main-detail" [@resultState]="resultState" >
             <div class="expansion-btn" (click)="changeReulstState()"></div>
             <div class="detail">
                 <div class="header" [hidden]="resultState==='inactive'">
@@ -82,5 +83,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

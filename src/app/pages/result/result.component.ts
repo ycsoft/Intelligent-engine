@@ -14,7 +14,7 @@ import { SearchResource } from "app/resources/search.resource";
     animations: [
         trigger('resultState', [
             state('inactive', style({
-                transform: 'translateX(578px)'
+                transform: 'translateX(580px)'
             })),
             state('active', style({
                 transform: 'translateX(0)'
@@ -94,15 +94,13 @@ export class ResultComponent implements OnInit {
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.keywords = params['keywords'];
-            // this.dataService.search(this.keywords).then((result) => {
-            //     const data = this.chartDataService.getChartData(result);
-            //     this.freeOne = this.chartDataService.getFree(result);
-            //     this.setChartOption(data.categories, data.nodes, data.links);
-            //     this.freeOne.checked = true;
-            //     this.freeOne.name = this.freeOne.small;
-            //     this.chartlist.push(this.freeOne);
-            // });
-            this.search(this.keywords);
+            this.dataService.search(this.keywords).then((result) => {
+                const data = this.chartDataService.getChartData(result);
+                this.freeOne = this.chartDataService.getFree(result);
+                this.setChartOption(data.categories, data.nodes, data.links);
+                this.chartlist.push(this.freeOne);
+            });
+            // this.search(this.keywords);
         });
     }
 

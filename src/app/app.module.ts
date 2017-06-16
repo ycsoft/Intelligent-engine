@@ -16,8 +16,6 @@ import { SelectModule } from './components/select2/ng2-select';
 import { AppComponent } from './app.component';
 import { ResultComponent } from './pages/result/result.component';
 import { OrderComponent } from './pages/order/order.component';
-import { OrderResultComponent } from './pages/order-result/order-result.component';
-import { ReportComponent } from './pages/report/report.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +23,6 @@ import { CheckComponent } from './components/check/check.component';
 import { AutoContentHeightDirective } from './directives/auto-content-height.directive';
 import { RadioComponent } from './components/radio/radio.component';
 import { SelectComponent } from './components/select/select.component';
-import { SelectDirective } from './directives/select.directive';
 import { AlertService } from 'app/services/alert.service';
 import { CAlertComponent } from 'app/components/alert/alert.component';
 import { RmbPipe } from 'app/pipes/rmb.pipe';
@@ -40,8 +37,6 @@ import { MobileDirective } from './validators/mobile.directive';
         AppComponent,
         ResultComponent,
         OrderComponent,
-        OrderResultComponent,
-        ReportComponent,
         LogoComponent,
         SearchBarComponent,
         CheckComponent,
@@ -49,7 +44,6 @@ import { MobileDirective } from './validators/mobile.directive';
         AutoContentHeightDirective,
         RadioComponent,
         SelectComponent,
-        SelectDirective,
         CAlertComponent,
         RmbPipe,
         EmailDirective,
