@@ -1,11 +1,11 @@
 import { Component, OnInit, state, style, transition, animate, trigger, ViewChild } from '@angular/core';
 import { DataService } from 'app/services/data.service';
 import { ChartDataService } from 'app/services/chart-data.service';
-import { SearchService } from 'app/resources/search.service';
 import { Result } from 'app/beans/result';
 import { ChartBean } from 'app/beans/chart-bean';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'app/services/session-storage.service';
+import { SearchResource } from "app/resources/search.resource";
 
 @Component({
     selector: 'app-result-component',
@@ -85,7 +85,7 @@ export class ResultComponent implements OnInit {
 
     constructor(private dataService: DataService,
         private chartDataService: ChartDataService,
-        private searchService: SearchService,
+        private searchResource: SearchResource,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private sessionStorageService: SessionStorageService) {
@@ -108,19 +108,19 @@ export class ResultComponent implements OnInit {
 
     private setChartOption(categories, nodes, links) {
         this.chartOption = {
-            title: {
-                text: 'Les Miserables',
-                subtext: 'Circular layout',
-                top: 'bottom',
-                left: 'right'
-            },
+            // title: {
+            //     text: 'Les Miserables',
+            //     subtext: 'Circular layout',
+            //     top: 'bottom',
+            //     left: 'right'
+            // },
             tooltip: {},
-            legend: [{
-                // selectedMode: 'single',
-                data: categories.map(function (a) {
-                    return a.name;
-                })
-            }],
+            // legend: [{
+            //     // selectedMode: 'single',
+            //     data: categories.map(function (a) {
+            //         return a.name;
+            //     })
+            // }],
             animationDurationUpdate: 1500,
             animationEasingUpdate: 'quinticInOut',
             series: [
@@ -231,14 +231,13 @@ export class ResultComponent implements OnInit {
     search(keywords: string) {
         this.keywords = keywords;
         if (this.keywords) {
-            this.searchService.search({ keywords: keywords }, (result: Result) => {
-                console.log('searchResult:', result);
+            this.searchResource.search({ keywords: keywords }, (result: Result) => {
+                // console.log('searchResult:', result);
             }).$observable.subscribe((result: Result) => {
+                this.chartlist.length = 0;
                 const data = this.chartDataService.getChartData(result.data);
                 this.freeOne = this.chartDataService.getFree(result.data);
                 this.setChartOption(data.categories, data.nodes, data.links);
-                this.freeOne.checked = true;
-                this.freeOne.name = this.freeOne.small;
                 this.chartlist.push(this.freeOne);
             });
         }
@@ -247,8 +246,8 @@ export class ResultComponent implements OnInit {
     private getTotalMoney() {
         this.totalMoney = 0;
         this.chartlist.forEach(element => {
-            if (element.free === 0 && element.checked) {
-                this.totalMoney += element.price;
+            if (element.checked) {
+                this.totalMoney += element.price * (element.contentSize - element.free);
             }
         });
     }

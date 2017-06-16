@@ -5,17 +5,15 @@ import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AlertModule } from 'ngx-bootstrap';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AngularEchartsModule } from 'ngx-echarts';
 
 import { ResourceModule } from 'ngx-resource';
 
+import { SelectModule } from './components/select2/ng2-select';
+
 import { AppComponent } from './app.component';
-import { SearchComponent } from './pages/search/search.component';
 import { ResultComponent } from './pages/result/result.component';
 import { OrderComponent } from './pages/order/order.component';
 import { OrderResultComponent } from './pages/order-result/order-result.component';
@@ -33,14 +31,13 @@ import { CAlertComponent } from 'app/components/alert/alert.component';
 import { RmbPipe } from 'app/pipes/rmb.pipe';
 import { SessionStorageService } from 'app/services/session-storage.service';
 import { ChartDataService } from 'app/services/chart-data.service';
-import { DataService } from "app/services/data.service";
+import { DataService } from 'app/services/data.service';
 import { EmailDirective } from './validators/email.directive';
 import { MobileDirective } from './validators/mobile.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent,
         ResultComponent,
         OrderComponent,
         OrderResultComponent,
@@ -67,10 +64,8 @@ import { MobileDirective } from './validators/mobile.directive';
         BrowserAnimationsModule,
         ResourceModule.forRoot(),
         AlertModule.forRoot(),
-        TypeaheadModule.forRoot(),
         ButtonsModule.forRoot(),
-        TabsModule.forRoot(),
-        PaginationModule.forRoot()
+        SelectModule
     ],
     providers: [
         AlertService,

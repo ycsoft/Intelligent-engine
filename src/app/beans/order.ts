@@ -1,7 +1,8 @@
 export class Order {
     email = '';
     invoice = false;
-    inv = null;
+    inv_type = 'common';
+    inv_header = '';
     contacts = '';
     phone = '';
     province = '';
@@ -16,11 +17,9 @@ export class Order {
     rules = '';
     order_no = '';
     total_amount = 0;
+    keywords = '';
 
     constructor() {
-        this.inv = {
-            type: 'common',
-            header: ''
-        };
+
     }
 }

@@ -7,7 +7,7 @@ import { RestClient } from 'app/services/rest-client.service';
 @ResourceParams({
   url: '/search'
 })
-export class SearchService extends RestClient {
+export class SearchResource extends RestClient {
 
   @ResourceAction({
     path: '/?keywords={!keywords}'

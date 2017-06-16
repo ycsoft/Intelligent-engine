@@ -9,7 +9,7 @@ import { Order } from 'app/beans/order';
 @ResourceParams({
     url: '/order_pay'
 })
-export class OrderService extends RestClient {
+export class OrderResource extends RestClient {
 
     @ResourceAction({
         method: RequestMethod.Post,

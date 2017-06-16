@@ -2,17 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SessionStorageService } from 'app/services/session-storage.service';
 import { ChartDataService } from 'app/services/chart-data.service';
 import { Order } from 'app/beans/order';
-import { OrderService } from 'app/resources/order.service';
 import { Guid } from 'app/services/guid';
 import { Result } from 'app/beans/result';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { OrderResource } from 'app/resources/order.resource';
+import { ProvinceCityService } from 'app/services/province-city.service';
+import { SelectDirective } from "app/directives/select.directive";
 
 @Component({
     selector: 'app-order',
     templateUrl: './order.component.html',
     styleUrls: ['./order.component.scss'],
-    providers: [OrderService]
+    providers: [OrderResource, ProvinceCityService]
 })
 export class OrderComponent implements OnInit {
 
@@ -26,28 +28,43 @@ export class OrderComponent implements OnInit {
 
     keywords = '';
 
+    provinces = [];
+
+    cities = [];
+
+    value;
+
     @ViewChild('orderForm') orderForm: FormControl;
 
     constructor(private sessionStorageService: SessionStorageService,
         private chartDataService: ChartDataService,
-        private orderService: OrderService,
+        private orderResource: OrderResource,
         private router: Router,
-        private activatedRoute: ActivatedRoute) { }
+        private activatedRoute: ActivatedRoute,
+        private provinceCityService: ProvinceCityService) { }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params) => {
             this.keywords = params['keywords'];
-        });
+            this.chartlist = this.sessionStorageService.getItem('chartlist');
+            this.order.total_amount = this.totalMoney = this.sessionStorageService.getItem('totalMoney');
+            this.order.rules = this.getRuleIds(this.chartlist);
+            this.order.order_no = Guid.newGuid();
+            this.order.keywords = this.keywords;
+            const data = this.chartDataService.getChartData(this.chartlist);
+            this.chartOption = this.getChartOption(data.categories, data.nodes, data.links);
+            this.chartlist.forEach(element => {
+                const data1 = this.chartDataService.getChartData([element]);
+                element.chartOption = this.getChartOption(data1.categories, data1.nodes, data1.links);
+            });
 
-        this.chartlist = this.sessionStorageService.getItem('chartlist');
-        this.order.total_amount = this.totalMoney = this.sessionStorageService.getItem('totalMoney');
-        this.order.rules = this.getRuleIds(this.chartlist);
-        this.order.order_no = Guid.newGuid();
-        const data = this.chartDataService.getChartData(this.chartlist, 10);
-        this.chartOption = this.getChartOption(data.categories, data.nodes, data.links);
-        this.chartlist.forEach(element => {
-            const data1 = this.chartDataService.getChartData([element], 10);
-            element.chartOption = this.getChartOption(data1.categories, data1.nodes, data1.links);
+            this.setProvince();
+        });
+    }
+
+    private setProvince() {
+        this.provinceCityService.getProvice().then((provinces: any[]) => {
+            this.provinces = provinces;
         });
     }
 
@@ -99,7 +116,7 @@ export class OrderComponent implements OnInit {
 
     submitOrder() {
         this.order.total_amount = 0.01;
-        this.orderService.postOrder(this.order, (result: Result) => {
+        this.orderResource.postOrder(this.order, (result: Result) => {
             location.href = result.data;
             console.log('url:', result.data);
         });
@@ -110,11 +127,19 @@ export class OrderComponent implements OnInit {
         this.router.navigate(['/result', this.keywords]);
     }
 
-    submitValid() {
-        if (this.order.invoice) {
-            return this.orderForm.invalid;
-        } else {
-            return this.orderForm['controls'].email.invalid;
-        }
+    public selectedProvice(value: any): void {
+        this.provinceCityService.getCities(value.text).then((cities: any[]) => {
+            this.order.province = value.id;
+            this.cities = cities;
+        });
+    }
+
+    public removedProvice(value: any) {
+        console.log('Removed value is: ', value);
+        this.cities = [];
+    }
+
+    public selectedCity(value: any) {
+        this.order.city = value.id;
     }
 }

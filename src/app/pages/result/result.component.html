@@ -55,8 +55,8 @@
                                 </div>
                                 <div class="item-right">
                                     <div class="line1">
-                                        <h1>{{item.name}}</h1>
-                                        <span class="price"><span [ngClass]="{'price-free':item.free}">{{item.price | rmb}}</span>{{item.free?'(免费)':''}}</span>
+                                        <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.free">，减免1条</span>）</span></h1>
+                                        <span class="price"><span [ngClass]="{'price-free':item.free}" *ngIf="item.free">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.free) * item.price | rmb}}</span>
                                     </div>
                                     <div class="line2">购买以查看详细策略</div>
                                 </div>

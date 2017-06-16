@@ -11,67 +11,72 @@ import { AlertType } from "app/beans/alert-type.enum";
 @Injectable()
 export class RestClient extends Resource {
 
-  constructor(http: Http,
-    private alertService: AlertService) {
-    super(http);
-  }
+    constructor(http: Http,
+        private alertService: AlertService) {
+        super(http);
+    }
 
-  // $getHeaders(methodOptions?: any): any {
-  //   let headers: any = {};
+    // $getHeaders(methodOptions?: any): any {
+    //   let headers: any = {};
 
-  //   // if (methodOptions.auth) {
-  //   //   headers.Authorization = localStorage.get('token');
-  //   // }
+    //   // if (methodOptions.auth) {
+    //   //   headers.Authorization = localStorage.get('token');
+    //   // }
 
-  //   return headers;
-  // }
+    //   return headers;
+    // }
 
-//   $setUrl(url: string){
-//       console.log(url);
-//   }
+    //   $setUrl(url: string){
+    //       console.log(url);
+    //   }
 
-//   $getUrl(methodOptions?: ResourceActionBase): string | Promise<string> {
-//     const resPath = super.$getUrl();
-//     return environment.url + resPath;
-//   }
+    //   $getUrl(methodOptions?: ResourceActionBase): string | Promise<string> {
+    //     const resPath = super.$getUrl();
+    //     return environment.url + resPath;
+    //   }
 
-  $requestInterceptor(req: Request, methodOptions?: ResourceActionBase): Request {
-    req.url = environment.url + req.url;
-    return req;
-  }
+    $requestInterceptor(req: Request, methodOptions?: ResourceActionBase): Request {
+        req.url = environment.url + req.url;
+        return req;
+    }
 
-  $responseInterceptor(observable: Observable<any>, req: Request, methodOptions?: ResourceActionBase): Observable<any> {
+    $responseInterceptor(observable: Observable<any>, req: Request, methodOptions?: ResourceActionBase): Observable<any> {
 
-    return Observable.create((subscriber: Subscriber<any>) => {
+        return Observable.create((subscriber: Subscriber<any>) => {
 
-      observable.subscribe(
-        (res: Response) => {
-          // if (res.headers) {
-          //   let newToken: string = res.headers.get('Authorization');
-          //   if (newToken) {
-          //     localStorage.setItem('token', newToken);
-          //   }
-          // }
-          const result = ((<any>res)._body ? res.json() : {}) as Result;
-          if (result.code === 0) {
-            subscriber.next(result);
-          } else {
-            const alert = {
-              type: AlertType.danger,
-              msg: '抱歉，未能获取正确结果，请更换关键词后重试'
-            };
-            this.alertService.alert(alert);
-            subscriber.error(res);
-          }
-        },
-        (error: Response) => {
-          // I also made a layer to parse errors
+            observable.subscribe(
+                (res: Response) => {
+                    // if (res.headers) {
+                    //   let newToken: string = res.headers.get('Authorization');
+                    //   if (newToken) {
+                    //     localStorage.setItem('token', newToken);
+                    //   }
+                    // }
+                    const result = ((<any>res)._body ? res.json() : {}) as Result;
+                    if (result.code !== undefined) {
+                        if (result.code === 0) {
+                            subscriber.next(result);
+                        } else {
+                            const alert = {
+                                type: AlertType.danger,
+                                msg: '抱歉，未能获取正确结果，请更换关键词后重试'
+                            };
+                            this.alertService.alert(alert);
+                            subscriber.error(res);
+                        }
+                    } else {
+                        const result1 = (<any>res)._body ? res.json() : {};
+                        subscriber.next(result1);
+                    }
+                },
+                (error: Response) => {
+                    // I also made a layer to parse errors
 
-        },
-        () => subscriber.complete()
-      );
+                },
+                () => subscriber.complete()
+            );
 
-    });
-  }
+        });
+    }
 
 }

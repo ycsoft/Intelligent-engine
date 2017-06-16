@@ -119,9 +119,13 @@ body::-webkit-scrollbar-thumb, .content::-webkit-scrollbar-thumb, .result-contai
   background-color: #0036fc;
   outline: 1px solid #333; }
 
-  .ng-valid[required], .ng-valid.required  {
+.ng-valid[required], ng-valid[appMobile], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
 }
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
+}
+
+.ui-select-container > .ui-select-search{
+    border-radius: 20px;
 }

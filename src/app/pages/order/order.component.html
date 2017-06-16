@@ -50,8 +50,8 @@
                                 <div echarts [options]="item.chartOption" class="main-chart item-left"></div>
                                 <div class="item-right">
                                     <div class="line1">
-                                        <h1>{{item.name}}</h1>
-                                        <span class="price"><span [ngClass]="{'price-free':item.free}">{{item.price | rmb}}</span>{{item.free?'(免费)':''}}</span>
+                                        <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.free">，减免1条</span>）</span></h1>
+                                        <span class="price"><span [ngClass]="{'price-free':item.free}" *ngIf="item.free">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.free) * item.price | rmb}}</span>
                                     </div>
                                     <div class="line2">购买以查看详细策略</div>
                                 </div>
@@ -78,16 +78,16 @@
                         </div>
                         <div class="invoice" *ngIf="order.invoice">
                             <div class="radio-grooup">
-                                <label for="radio1"><app-radio [isChecked]="order.inv.type==='common'" (onChange)="order.inv.type='common'" class="blue">普通发票</app-radio></label>
-                                <label for="radio2"><app-radio [isChecked]="order.inv.type==='addedValueTax'" (onChange)="order.inv.type='addedValueTax'" class="blue">增值税发票</app-radio></label>
+                                <label for="radio1"><app-radio [isChecked]="order.inv_type==='common'" (onChange)="order.inv_type='common'" class="blue">普通发票</app-radio></label>
+                                <label for="radio2"><app-radio [isChecked]="order.inv_type==='addedValueTax'" (onChange)="order.inv_type='addedValueTax'" class="blue">增值税发票</app-radio></label>
                             </div>
-                            <div class="panel1" *ngIf="order.inv.type==='common'">
+                            <div class="panel1" *ngIf="order.inv_type==='common'">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="发票抬头" [(ngModel)]="order.inv.header"  name="inv.header" >
+                                    <input type="text" class="form-control" placeholder="发票抬头" [(ngModel)]="order.inv_header"  name="inv_header" >
                                 </div>
 
                             </div>
-                            <div class="panel3" *ngIf="order.inv.type==='addedValueTax'">
+                            <div class="panel3" *ngIf="order.inv_type==='addedValueTax'">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="单位全称" [(ngModel)]="order.company_name" name="company_name" >
                                 </div>
@@ -103,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="税务登记号" [(ngModel)]="order.tax_no" name="company_name" >
+                                    <input type="text" class="form-control" placeholder="税务登记号" [(ngModel)]="order.tax_no" name="tax_no" >
                                 </div>
                             </div>
                             <div class="panel2">
@@ -122,16 +122,23 @@
                                 </div>
                                 <div class="line2">
                                     <div class="form-group">
-                                        <select appSelect class="selectpicker form-control" [(ngModel)]="order.province" name="province" >
-                                            <option>--省--</option>
-                                            <option>上海市</option>
-                                        </select>
+                                        <ng-select [allowClear]="true"
+                                            [items]="provinces"
+                                            (selected)="selectedProvice($event)"
+                                            (removed)="removedProvice($event)"
+                                            placeholder="--省--">
+                                        </ng-select>
                                     </div>
                                     <div class="form-group">
-                                        <select appSelect class="selectpicker form-control" [(ngModel)]="order.city" name="city" >
+                                        <ng-select [allowClear]="true"
+                                            [items]="cities"
+                                            (selected)="selectedCity($event)"
+                                            placeholder="--市--">
+                                        </ng-select>
+                                        <!--<select appSelect class="selectpicker form-control" [(ngModel)]="order.city" name="city" >
                                             <option selected>--市--</option>
                                             <option>上海市</option>
-                                        </select>
+                                        </select>-->
                                     </div>
                                     <div class="form-group" style="width:100%">
                                         <input type="text" class="form-control" placeholder="请填写详细地址" [(ngModel)]="order.address" name="address" >

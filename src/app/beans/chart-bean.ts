@@ -10,4 +10,6 @@ export class ChartBean {
   public strategylist: Array<any> = [];
   public checked: boolean;
   public name: string;
+  public contentSize: number;
+  public size: number;
 }

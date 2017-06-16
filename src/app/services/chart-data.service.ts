@@ -7,10 +7,11 @@ export class ChartDataService {
 
     constructor() { }
 
+    chartData = null;
     /**
      * getCharData
      */
-    public getChartData(array: ChartBean[], value = 40) {
+    public getChartData(array: ChartBean[]) {
         const links = [];
         const nodes = [];
         const categories = [{
@@ -27,12 +28,14 @@ export class ChartDataService {
                     rule_id: chartBean.rule_id,
                     name: chartBean.small,
                     small: chartBean.small,
-                    value: value,
-                    symbolSize: value,
+                    value: chartBean.size,
+                    symbolSize: chartBean.size * 40,
                     category: chartBean.free ? 0 : 1,
                     free: chartBean.free,
                     price: chartBean.price,
                     type: 'big',
+                    contentSize: 1,
+                    size: chartBean.size,
                     label: {
                         normal: {
                             show: true
@@ -40,6 +43,8 @@ export class ChartDataService {
                     }
                 };
                 nodes.push(smallObj);
+            } else {
+                smallObj.contentSize += 1;
             }
             // const contentObj = {
             //   id: ++index,
@@ -78,17 +83,22 @@ export class ChartDataService {
         });
         console.log('links:', links);
         console.log('nodes:', nodes);
-        return {
+        this.chartData = {
             links: links,
             nodes: nodes,
             categories: categories
         };
+        return this.chartData;
     }
 
     public getFree(array: ChartBean[]) {
         for (let i = 0; i < array.length; i++) {
             if (array[i].free) {
                 const free = array[i];
+                const freeNode = this.chartData.nodes.find((element) => element.rule_id === free.rule_id);
+                free.name = free.small;
+                free.checked = true;
+                free.contentSize = freeNode.contentSize;
                 for (let j = 0; j < free.strategy.length; j++) {
                     if (free.strategylist === undefined) {
                         free.strategylist = [];
