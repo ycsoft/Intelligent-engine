@@ -4,10 +4,11 @@ import { RestClient } from 'app/services/rest-client.service';
 import { RequestMethod } from '@angular/http';
 import { Result } from 'app/beans/result';
 import { Order } from 'app/beans/order';
+import { environment } from 'environments/environment';
 
 @Injectable()
 @ResourceParams({
-    url: '/order_pay'
+    url: `${environment.server1}/order_pay`
 })
 export class OrderResource extends RestClient {
 

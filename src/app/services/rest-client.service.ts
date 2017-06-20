@@ -36,7 +36,7 @@ export class RestClient extends Resource {
     //   }
 
     $requestInterceptor(req: Request, methodOptions?: ResourceActionBase): Request {
-        req.url = environment.url + req.url;
+        // req.url = environment.url + req.url;
         return req;
     }
 

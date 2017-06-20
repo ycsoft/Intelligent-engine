@@ -122,6 +122,7 @@ export class ChartDataService {
                 return free;
             }
         }
+        return <ChartBean>{};
     }
 
     private isExist(array: any, name) {

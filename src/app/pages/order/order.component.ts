@@ -8,7 +8,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { OrderResource } from 'app/resources/order.resource';
 import { ProvinceCityService } from 'app/services/province-city.service';
-import { SelectDirective } from "app/directives/select.directive";
 
 @Component({
     selector: 'app-order',

@@ -19,14 +19,11 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
         "assets/styles/fonts.css",
         "styles.scss"
       ],
       "scripts": [
-        "../node_modules/echarts/dist/echarts.min.js",
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"
+        "libs/echarts.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

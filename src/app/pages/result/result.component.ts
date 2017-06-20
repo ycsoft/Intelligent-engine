@@ -5,7 +5,7 @@ import { Result } from 'app/beans/result';
 import { ChartBean } from 'app/beans/chart-bean';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'app/services/session-storage.service';
-import { SearchResource } from "app/resources/search.resource";
+import { SearchResource } from 'app/resources/search.resource';
 
 @Component({
     selector: 'app-result-component',
@@ -94,13 +94,13 @@ export class ResultComponent implements OnInit {
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.keywords = params['keywords'];
-            this.dataService.search(this.keywords).then((result) => {
-                const data = this.chartDataService.getChartData(result);
-                this.freeOne = this.chartDataService.getFree(result);
-                this.setChartOption(data.categories, data.nodes, data.links);
-                this.chartlist.push(this.freeOne);
-            });
-            // this.search(this.keywords);
+            // this.dataService.search(this.keywords).then((result) => {
+            //     const data = this.chartDataService.getChartData(result);
+            //     this.freeOne = this.chartDataService.getFree(result);
+            //     this.setChartOption(data.categories, data.nodes, data.links);
+            //     this.chartlist.push(this.freeOne);
+            // });
+            this.search(this.keywords);
         });
     }
 
