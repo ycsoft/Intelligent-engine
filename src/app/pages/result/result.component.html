@@ -6,81 +6,83 @@
             <div echarts [options]="chartOption" (chartInit)="onChartInit($event)" (chartClick)="onChartClick($event)" class="main-chart"></div>
         </div>
     </div>
-    <div class="main-detail" [@resultState]="resultState" >
-            <div class="expansion-btn" (click)="changeReulstState()"></div>
-            <div class="detail">
-                <div class="header" [hidden]="resultState==='inactive'">
-                    <div class="header-container">
-                        <div class="tab-header" (click)="reportState='state1'" [ngClass]="{'active':reportState==='state1'}" (click)="changeContentPage(1)">免费报告</div>
-                        <div class="tab-header" (click)="reportState='state2'" [ngClass]="{'active':reportState==='state2'}" (click)="changeContentPage(2)">应用案例</div>
-                        <div class="active-header" [@reportState]="reportState"></div>
-                    </div>
+    <div class="main-detail" [@resultState]="resultState">
+        <div class="expansion-btn" (click)="changeReulstState()"></div>
+        <div class="detail">
+            <div class="header" [hidden]="resultState==='inactive'">
+                <div class="header-container">
+                    <div class="tab-header" (click)="reportState='state1'" [ngClass]="{'active':reportState==='state1'}" (click)="changeContentPage(1)">免费报告</div>
+                    <div class="tab-header" (click)="reportState='state2'" [ngClass]="{'active':reportState==='state2'}" (click)="changeContentPage(2)">应用案例</div>
+                    <div class="active-header" [@reportState]="reportState"></div>
                 </div>
-                <div class="content" [appAutoContentHeight] [@contentState]="contentPage1State">
-                    <div class="content-free" *ngIf="type==='type1'">
-                        <div class="desc">
-                            <div class="circle"></div>
-                            <div class="desc-text">{{freeOne.small}}<br>{{freeOne.content}}</div>
-                        </div>
-                        <div class="desc-content">
-                            <h1 class="t_blue">策略：</h1>
-                            <div *ngFor="let item of freeOne.strategylist;">
-                                <h1 class="t_red">{{item.main}}</h1>
-                                <div *ngFor="let item2 of item.list;index as i;">
-                                    <h2 class="t_blue">{{i+1}}、{{item2.sub}}</h2>
-                                    <p class="t_text">{{item2.manner}}</p>
-                                </div>
+            </div>
+            <div class="content" [appAutoContentHeight] [@contentState]="contentPage1State">
+                <div class="content-free" *ngIf="type==='type1'">
+                    <div class="desc">
+                        <div class="circle"></div>
+                        <div class="desc-text">{{freeOne.small}}<br>{{freeOne.content}}</div>
+                    </div>
+                    <div class="desc-content">
+                        <h1 class="t_blue">策略：</h1>
+                        <div *ngFor="let item of freeOne.strategylist;">
+                            <h1 class="t_red">{{item.main}}</h1>
+                            <div *ngFor="let item2 of item.list;index as i;">
+                                <h2 class="t_blue">{{i+1}}、{{item2.sub}}</h2>
+                                <p class="t_text">{{item2.manner}}</p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="content-buy" *ngIf="type==='type2'">
-                        <div class="desc">
-                            <div class="circle"></div>
-                            <div class="desc-text">特征详情xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
-                        </div>
-                        <div class="desc-content-free">
-                            <div class="icon-buy">
-                                <img src="assets/images/icon_buy.png">
-                                <p>购买即可查看<br>分维更多策略报告</p>
-                            </div>
-                            <button type="button" class="btn btn-red">购&nbsp;&nbsp;&nbsp;&nbsp;买</button>
-                        </div>
+                <div class="content-buy" *ngIf="type==='type2'">
+                    <div class="desc">
+                        <div class="circle"></div>
+                        <div class="desc-text">特征详情xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
                     </div>
+                    <div class="desc-content-free">
+                        <div class="icon-buy">
+                            <img src="assets/images/icon_buy.png">
+                            <p>购买即可查看<br>分维更多策略报告</p>
+                        </div>
+                        <button type="button" class="btn btn-red">购&nbsp;&nbsp;&nbsp;&nbsp;买</button>
+                    </div>
+                </div>
 
-                    <div class="content-list" *ngIf="type==='type3'">
-                        <div class="list">
-                            <div class="item" *ngFor="let item of chartlist">
-                                <div class="item-left">
-                                    <app-check [isChecked]="item.checked" (onChange)="checked(item)"></app-check>
+                <div class="content-list" *ngIf="type==='type3'">
+                    <div class="list">
+                        <div class="item" *ngFor="let item of chartlist">
+                            <div class="item-left">
+                                <app-check [isChecked]="item.checked" (onChange)="checked(item)"></app-check>
+                            </div>
+                            <div class="item-right">
+                                <div class="line1">
+                                    <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.free">，减免1条</span>）</span>
+                                    </h1>
+                                    <span class="price"><span [ngClass]="{'price-free':item.free}" *ngIf="item.free">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.free)
+                                    * item.price | rmb}}</span>
                                 </div>
-                                <div class="item-right">
-                                    <div class="line1">
-                                        <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.free">，减免1条</span>）</span></h1>
-                                        <span class="price"><span [ngClass]="{'price-free':item.free}" *ngIf="item.free">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.free) * item.price | rmb}}</span>
-                                    </div>
-                                    <div class="line2">购买以查看详细策略</div>
-                                </div>
+                                <div class="line2">购买以查看详细策略</div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="content" [@contentState]="contentPage2State">
-                </div>
-                <!--<div class="footer" *ngIf="type==='type1'">
-                    <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="7" [rotate]="false"
-                        [nextText]="'&gt;'" [previousText]="'&lt;'" class="pagination-sm"></pagination>
-                </div>-->
-                <div class="footer-buy" *ngIf="type==='type3'">
-                    <div>
-                        <app-check [isChecked]="isCheckAll" (onChange)="checkAll()"></app-check>
-                        <span>全选</span>
-                    </div>
-                    <div>
-                        <span>总价：<span class="price">{{totalMoney | rmb}}</span></span>
-                        <button type="button" class="btn btn-red" (click)="toPay()">购&nbsp;&nbsp;&nbsp;&nbsp;买</button>
                     </div>
                 </div>
             </div>
+            <div class="content" [@contentState]="contentPage2State">
+            </div>
+            <!--<div class="footer" *ngIf="type==='type1'">
+                    <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" [maxSize]="7" [rotate]="false"
+                        [nextText]="'&gt;'" [previousText]="'&lt;'" class="pagination-sm"></pagination>
+                </div>-->
+            <div class="footer-buy" *ngIf="type==='type3'">
+                <div>
+                    <app-check [isChecked]="isCheckAll" (onChange)="checkAll()"></app-check>
+                    <span>全选</span>
+                </div>
+                <div>
+                    <span>总价：<span class="price">{{totalMoney | rmb}}</span></span>
+                    <button type="button" class="btn btn-red" (click)="toPay()">购&nbsp;&nbsp;&nbsp;&nbsp;买</button>
+                </div>
+            </div>
         </div>
+    </div>
 </div>

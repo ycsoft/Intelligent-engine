@@ -6,9 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AlertModule } from 'ngx-bootstrap';
-import { ButtonsModule } from 'ngx-bootstrap/buttons';
-
 import { AngularEchartsModule } from 'ngx-echarts';
 
 import { ResourceModule } from 'ngx-resource';
@@ -24,7 +21,6 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { CheckComponent } from './components/check/check.component';
 import { AutoContentHeightDirective } from './directives/auto-content-height.directive';
 import { RadioComponent } from './components/radio/radio.component';
-import { SelectComponent } from './components/select/select.component';
 import { AlertService } from 'app/services/alert.service';
 import { CAlertComponent } from 'app/components/alert/alert.component';
 import { RmbPipe } from 'app/pipes/rmb.pipe';
@@ -33,6 +29,8 @@ import { ChartDataService } from 'app/services/chart-data.service';
 import { DataService } from 'app/services/data.service';
 import { EmailDirective } from './validators/email.directive';
 import { MobileDirective } from './validators/mobile.directive';
+import { SmallTypeColorService } from 'app/services/small-type-color.service';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
     declarations: [
@@ -45,11 +43,11 @@ import { MobileDirective } from './validators/mobile.directive';
         CheckComponent,
         AutoContentHeightDirective,
         RadioComponent,
-        SelectComponent,
         CAlertComponent,
         RmbPipe,
         EmailDirective,
-        MobileDirective
+        MobileDirective,
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -59,15 +57,14 @@ import { MobileDirective } from './validators/mobile.directive';
         AngularEchartsModule,
         BrowserAnimationsModule,
         ResourceModule.forRoot(),
-        AlertModule.forRoot(),
-        ButtonsModule.forRoot(),
         SelectModule
     ],
     providers: [
         AlertService,
         SessionStorageService,
         ChartDataService,
-        DataService
+        DataService,
+        SmallTypeColorService
     ],
     bootstrap: [AppComponent]
 })

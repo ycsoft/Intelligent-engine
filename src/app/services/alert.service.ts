@@ -4,12 +4,17 @@ import { Alert } from 'app/beans/alert';
 @Injectable()
 export class AlertService {
 
-  public event = new EventEmitter<Alert>();
+    public alertEvent = new EventEmitter<Alert>();
 
-  constructor() { }
+    public loadingEvent = new EventEmitter<boolean>();
 
-  public alert(alert: Alert) {
-    this.event.emit(alert);
-  }
+    constructor() { }
 
+    public alert(alert: Alert) {
+        this.alertEvent.emit(alert);
+    }
+
+    public loading(isShow: boolean) {
+        this.loadingEvent.emit(isShow);
+    }
 }

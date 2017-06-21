@@ -5,7 +5,7 @@ import { AutoContentHeightDirective } from './auto-content-height.directive';
 
 describe('AutoContentHeightDirective', () => {
   it('should create an instance', () => {
-    const directive = new AutoContentHeightDirective();
+    const directive = new AutoContentHeightDirective(null);
     expect(directive).toBeTruthy();
   });
 });

@@ -254,12 +254,12 @@ let styles = `
   `
 })
 export class SelectComponent implements OnInit, ControlValueAccessor {
-    @Input() public allowClear: boolean = false;
-    @Input() public placeholder: string = '';
-    @Input() public idField: string = 'id';
-    @Input() public textField: string = 'text';
-    @Input() public childrenField: string = 'children';
-    @Input() public multiple: boolean = false;
+    @Input() public allowClear = false;
+    @Input() public placeholder = '';
+    @Input() public idField = 'id';
+    @Input() public textField = 'text';
+    @Input() public childrenField = 'children';
+    @Input() public multiple = false;
 
     @Input()
     public set items(value: Array<any>) {
@@ -293,7 +293,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         if (!selectedItems || selectedItems.length === 0) {
             this._active = [];
         } else {
-            let areItemsStrings = typeof selectedItems[0] === 'string';
+            const areItemsStrings = typeof selectedItems[0] === 'string';
 
             this._active = selectedItems.map((item: any) => {
                 let data = areItemsStrings
@@ -332,12 +332,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
     protected onChange: any = Function.prototype;
     protected onTouched: any = Function.prototype;
 
-    public inputMode: boolean = false;
-    private _optionsOpened: boolean = false;
+    public inputMode = false;
+    private _optionsOpened = false;
     private behavior: OptionsBehavior;
-    public inputValue: string = '';
+    public inputValue = '';
     private _items: Array<any> = [];
-    private _disabled: boolean = false;
+    private _disabled = false;
     private _active: Array<SelectItem> = [];
 
     public constructor(element: ElementRef, private sanitizer: DomSanitizer) {
@@ -349,7 +349,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
-    public inputEvent(e: any, isUpMode: boolean = false): void {
+    public inputEvent(e: any, isUpMode = false): void {
         // tab
         if (e.keyCode === 9) {
             return;
@@ -361,7 +361,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         }
         // backspace
         if (!isUpMode && e.keyCode === 8) {
-            let el: any = this.element.nativeElement
+            const el: any = this.element.nativeElement
                 .querySelector('div.ui-select-container > input');
             if (!el.value || el.value.length <= 0) {
                 if (this.active.length > 0) {
@@ -417,7 +417,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
             e.preventDefault();
             return;
         }
-        let target = e.target || e.srcElement;
+        const target = e.target || e.srcElement;
         if (target && target.value) {
             this.inputValue = target.value;
             this.behavior.filter(new RegExp(escapeRegexp(this.inputValue), 'ig'));
@@ -437,7 +437,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
             return;
         }
         if (this.multiple === true && this.active) {
-            let index = this.active.indexOf(item);
+            const index = this.active.indexOf(item);
             this.active.splice(index, 1);
             this.data.next(this.active);
             this.doEvent('removed', item);
@@ -512,12 +512,12 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
             return;
         }
         this.inputMode = true;
-        let value = String
+        const value = String
             .fromCharCode(96 <= event.keyCode && event.keyCode <= 105 ? event.keyCode - 48 : event.keyCode)
             .toLowerCase();
         this.focusToInput(value);
         this.open();
-        let target = event.target || event.srcElement;
+        const target = event.target || event.srcElement;
         target.value = value;
         this.inputEvent(event);
     }
@@ -535,9 +535,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
         this.remove(value);
     }
 
-    private focusToInput(value: string = ''): void {
+    private focusToInput(value = ''): void {
         setTimeout(() => {
-            let el = this.element.nativeElement.querySelector('div.ui-select-container > input');
+            const el = this.element.nativeElement.querySelector('div.ui-select-container > input');
             if (el) {
                 el.focus();
                 el.value = value;
@@ -611,24 +611,24 @@ export class Behavior {
     }
 
     public ensureHighlightVisible(optionsMap: Map<string, number> = void 0): void {
-        let container = this.actor.element.nativeElement.querySelector('.ui-select-choices-content');
+        const container = this.actor.element.nativeElement.querySelector('.ui-select-choices-content');
         if (!container) {
             return;
         }
-        let choices = container.querySelectorAll('.ui-select-choices-row');
+        const choices = container.querySelectorAll('.ui-select-choices-row');
         if (choices.length < 1) {
             return;
         }
-        let activeIndex = this.getActiveIndex(optionsMap);
+        const activeIndex = this.getActiveIndex(optionsMap);
         if (activeIndex < 0) {
             return;
         }
-        let highlighted: any = choices[activeIndex];
+        const highlighted: any = choices[activeIndex];
         if (!highlighted) {
             return;
         }
-        let posY: number = highlighted.offsetTop + highlighted.clientHeight - container.scrollTop;
-        let height: number = container.offsetHeight;
+        const posY: number = highlighted.offsetTop + highlighted.clientHeight - container.scrollTop;
+        const height: number = container.offsetHeight;
         if (posY > height) {
             container.scrollTop += posY - height;
         } else if (posY < highlighted.clientHeight) {
@@ -661,21 +661,21 @@ export class GenericBehavior extends Behavior implements OptionsBehavior {
     }
 
     public prev(): void {
-        let index = this.actor.options.indexOf(this.actor.activeOption);
+        const index = this.actor.options.indexOf(this.actor.activeOption);
         this.actor.activeOption = this.actor
             .options[index - 1 < 0 ? this.actor.options.length - 1 : index - 1];
         super.ensureHighlightVisible();
     }
 
     public next(): void {
-        let index = this.actor.options.indexOf(this.actor.activeOption);
+        const index = this.actor.options.indexOf(this.actor.activeOption);
         this.actor.activeOption = this.actor
             .options[index + 1 > this.actor.options.length - 1 ? 0 : index + 1];
         super.ensureHighlightVisible();
     }
 
     public filter(query: RegExp): void {
-        let options = this.actor.itemObjects
+        const options = this.actor.itemObjects
             .filter((option: SelectItem) => {
                 return stripTags(option.text).match(query) &&
                     (this.actor.multiple === false ||
@@ -710,9 +710,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     }
 
     public prev(): void {
-        let indexParent = this.actor.options
+        const indexParent = this.actor.options
             .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
-        let index = this.actor.options[indexParent].children
+        const index = this.actor.options[indexParent].children
             .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
         this.actor.activeOption = this.actor.options[indexParent].children[index - 1];
         if (!this.actor.activeOption) {
@@ -730,9 +730,9 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     }
 
     public next(): void {
-        let indexParent = this.actor.options
+        const indexParent = this.actor.options
             .findIndex((option: SelectItem) => this.actor.activeOption.parent && this.actor.activeOption.parent.id === option.id);
-        let index = this.actor.options[indexParent].children
+        const index = this.actor.options[indexParent].children
             .findIndex((option: SelectItem) => this.actor.activeOption && this.actor.activeOption.id === option.id);
         this.actor.activeOption = this.actor.options[indexParent].children[index + 1];
         if (!this.actor.activeOption) {
@@ -748,14 +748,14 @@ export class ChildrenBehavior extends Behavior implements OptionsBehavior {
     }
 
     public filter(query: RegExp): void {
-        let options: Array<SelectItem> = [];
-        let optionsMap: Map<string, number> = new Map<string, number>();
+        const options: Array<SelectItem> = [];
+        const optionsMap: Map<string, number> = new Map<string, number>();
         let startPos = 0;
-        for (let si of this.actor.itemObjects) {
-            let children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.text));
+        for (const si of this.actor.itemObjects) {
+            const children: Array<SelectItem> = si.children.filter((option: SelectItem) => query.test(option.text));
             startPos = si.fillChildrenHash(optionsMap, startPos);
             if (children.length > 0) {
-                let newSi = si.getSimilar();
+                const newSi = si.getSimilar();
                 newSi.children = children;
                 options.push(newSi);
             }

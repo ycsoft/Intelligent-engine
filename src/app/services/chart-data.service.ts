@@ -1,48 +1,73 @@
 import { Injectable } from '@angular/core';
 import { ChartBean } from 'app/beans/chart-bean';
-import { Strategy } from "app/beans/strategy";
+import { Strategy } from 'app/beans/strategy';
+import { SmallTypeColorService } from 'app/services/small-type-color.service';
 
 @Injectable()
 export class ChartDataService {
 
-    constructor() { }
-
     chartData = null;
+
+    constructor(private smallTypeColorService: SmallTypeColorService) { }
+
     /**
      * getCharData
      */
     public getChartData(array: ChartBean[]) {
         const links = [];
         const nodes = [];
-        const categories = [{
-            name: '选中',
-            id: 0
-        }, {
-            name: '未选中',
-            id: 1
-        }];
+        const categories = [];
+        let index = -1;
+        // categories.push({
+        //     name: '选中',
+        //     id: ++index,
+        //     itemStyle: {
+        //         normal: {
+        //             color: this.smallTypeColorService.getColor('选中').color
+        //         }
+        //     }
+        // });
         array.forEach(chartBean => {
             let smallObj = this.isExist(nodes, chartBean.small);
             if (smallObj === undefined) {
+                // categories.push({
+                //     name: chartBean.small,
+                //     id: ++index,
+                //     itemStyle: {
+                //         normal: {
+                //             color: this.smallTypeColorService.getColor(chartBean.small).color
+                //         }
+                //     }
+                // });
                 smallObj = {
                     rule_id: chartBean.rule_id,
                     name: chartBean.small,
                     small: chartBean.small,
                     value: chartBean.size,
                     symbolSize: chartBean.size * 40,
-                    category: chartBean.free ? 0 : 1,
+                    // category: index,
                     free: chartBean.free,
                     price: chartBean.price,
                     type: 'big',
                     contentSize: 1,
                     size: chartBean.size,
+                    selected: chartBean.free ? true : false,
                     label: {
                         normal: {
                             show: true
                         }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: chartBean.free ?
+                                this.smallTypeColorService.getColor('选中').color :
+                                this.smallTypeColorService.getColor(chartBean.small).color
+                        }
                     }
                 };
                 nodes.push(smallObj);
+
+
             } else {
                 smallObj.contentSize += 1;
             }

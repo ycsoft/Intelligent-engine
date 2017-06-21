@@ -8,12 +8,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { OrderResource } from 'app/resources/order.resource';
 import { ProvinceCityService } from 'app/services/province-city.service';
+import { DataResource } from 'app/resources/data.resource';
 
 @Component({
     selector: 'app-order',
     templateUrl: './order.component.html',
     styleUrls: ['./order.component.scss'],
-    providers: [OrderResource, ProvinceCityService]
+    providers: [OrderResource, ProvinceCityService, DataResource]
 })
 export class OrderComponent implements OnInit {
 

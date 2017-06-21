@@ -6,11 +6,13 @@ import { ChartBean } from 'app/beans/chart-bean';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'app/services/session-storage.service';
 import { SearchResource } from 'app/resources/search.resource';
+import { SmallTypeColorService } from 'app/services/small-type-color.service';
 
 @Component({
     selector: 'app-result-component',
     templateUrl: 'result.component.html',
     styleUrls: ['result.component.scss'],
+    providers: [SearchResource],
     animations: [
         trigger('resultState', [
             state('inactive', style({
@@ -88,7 +90,8 @@ export class ResultComponent implements OnInit {
         private searchResource: SearchResource,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private sessionStorageService: SessionStorageService) {
+        private sessionStorageService: SessionStorageService,
+        private smallTypeColorService: SmallTypeColorService) {
     }
 
     ngOnInit(): void {
@@ -166,7 +169,9 @@ export class ResultComponent implements OnInit {
         }
         if (event.type === 'click') {
             if (event.data.free === 0) {
-                event.data.category = event.data.category === 0 ? 1 : 0;
+                event.data.selected = !event.data.selected;
+                event.data.itemStyle.normal.color = event.data.selected ?
+                    this.smallTypeColorService.getColor('选中').color : this.smallTypeColorService.getColor(event.data.small).color;
                 this.addOrRemoveInCharList(event.data);
                 this.resizeChart();
                 this.getTotalMoney();
@@ -232,6 +237,7 @@ export class ResultComponent implements OnInit {
             this.searchResource.search({ keywords: keywords }, (result: Result) => {
                 // console.log('searchResult:', result);
             }).$observable.subscribe((result: Result) => {
+                this.type = 'type1';
                 this.chartlist.length = 0;
                 const data = this.chartDataService.getChartData(result.data);
                 this.freeOne = this.chartDataService.getFree(result.data);

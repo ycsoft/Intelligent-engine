@@ -4,9 +4,9 @@ import { Http, Request, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { environment } from 'environments/environment';
-import { Result } from "app/beans/result";
-import { AlertService } from "app/services/alert.service";
-import { AlertType } from "app/beans/alert-type.enum";
+import { Result } from 'app/beans/result';
+import { AlertService } from 'app/services/alert.service';
+import { AlertType } from 'app/beans/alert-type.enum';
 
 @Injectable()
 export class RestClient extends Resource {
@@ -37,6 +37,7 @@ export class RestClient extends Resource {
 
     $requestInterceptor(req: Request, methodOptions?: ResourceActionBase): Request {
         // req.url = environment.url + req.url;
+        this.alertService.loading(true);
         return req;
     }
 
@@ -52,6 +53,7 @@ export class RestClient extends Resource {
                     //     localStorage.setItem('token', newToken);
                     //   }
                     // }
+                    this.alertService.loading(false);
                     const result = ((<any>res)._body ? res.json() : {}) as Result;
                     if (result.code !== undefined) {
                         if (result.code === 0) {
@@ -70,6 +72,7 @@ export class RestClient extends Resource {
                     }
                 },
                 (error: Response) => {
+                    this.alertService.loading(false);
                     // I also made a layer to parse errors
 
                 },
