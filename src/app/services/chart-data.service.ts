@@ -44,14 +44,14 @@ export class ChartDataService {
                     name: chartBean.small,
                     small: chartBean.small,
                     value: chartBean.size,
-                    symbolSize: chartBean.size * 40,
+                    symbolSize: this.getSize(chartBean.size),
                     // category: index,
                     free: chartBean.free,
                     price: chartBean.price,
                     type: 'big',
                     contentSize: 1,
                     size: chartBean.size,
-                    selected: chartBean.free ? true : false,
+                    selected: false,
                     label: {
                         normal: {
                             show: true
@@ -59,9 +59,7 @@ export class ChartDataService {
                     },
                     itemStyle: {
                         normal: {
-                            color: chartBean.free ?
-                                this.smallTypeColorService.getColor('选中').color :
-                                this.smallTypeColorService.getColor(chartBean.small).color
+                            color: '#cccccc'
                         }
                     }
                 };
@@ -160,5 +158,11 @@ export class ChartDataService {
         return array.find((element) => {
             return element.source === source && element.target === target;
         });
+    }
+
+    private getSize(x: number) {
+        return 10 + Math.exp(10 * (1.3 * x - 0.9));
+        // return Math.pow(Math.E, 5 * (x-0.2));
+        // return 67.1121 * x * x - 9.7788 * x + 6.2160;
     }
 }

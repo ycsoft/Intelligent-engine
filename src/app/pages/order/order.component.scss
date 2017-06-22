@@ -1,9 +1,11 @@
+@import '../../../_constants.scss';
+
 .order-state{
     position: absolute;
     background: transparent;
     left: 0;
     height: 100%;
-    width: 90px;
+    width: 80px;
     padding-top: 120px;
     overflow: hidden;
     .state{
@@ -11,7 +13,7 @@
         flex-direction: row;
         .state-left{
             text-align: center;
-            width: 80px;
+            width: 70px;
             height: 90px;
             padding: 10px 0;
             .img-box{
@@ -20,6 +22,11 @@
             span{
                 display: block;
                 color: white;
+                opacity: 0.5;
+                margin-top: 10px;
+            }
+            .active{
+                opacity: 1;
             }
         }
         .state-right{
@@ -56,12 +63,12 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding: 64px 0 0;
+    padding: 50px 0 0;
     .result-container1{
-        padding: 16px 0;
+        padding: 6px 0;
         overflow: scroll;
         .result-container2{
-            padding: 0 50px;
+            padding: 0 40px;
             .order-info{
                 width: 100%;
                 .title{
@@ -74,7 +81,7 @@
                     align-items: center;
                     span{
                         color: #0036fc;
-                        font-size: 16px;
+                        font-size: $ft-title-s;
                         display: block;
                         width: 130px;
                         height: 100%;
@@ -89,27 +96,31 @@
                     height: auto;
                     display: flex;
                     .content-left{
-                        width: 35%;
+                        width: 40%;
                         min-height: 300px;
                         padding: 10px;
                         border-right: 1px solid #ccc;
                         >div{
                             height: 100%;
                             width: 100%;
-                            max-height: 450px;
+                            display: flex;
+                            align-items: center;
                         }
                     }
                     .content-right{
-                        width: 65%;
+                        width: 60%;
+                        max-height: 450px;
+                        overflow: scroll;
                         .item{
                             width: 100%;
                             display: inline-flex;
                             padding: 20px 0;
                             border-bottom: 1px #ccc dashed;
-                            height: 140px;
+                            height: 110px;
                             align-items: center;
                             padding: 0 30px;
                             cursor: pointer;
+                            line-height: 35px;
                             .item-left{
                                 padding: 20px 20px 20px 0;
                                 width: 140px;
@@ -124,7 +135,7 @@
                                     align-items: baseline;
                                     h1>span{
                                         color: #999999;
-                                        font-size: 13px;
+                                        font-size: $ft-tip;
                                     }
                                     .price{
                                         color: #ff2600;
@@ -133,8 +144,12 @@
                                     }
                                     .price-free{
                                         text-decoration: line-through;
-                                        font-size: 15px;
+                                        font-size: $ft-content;
                                     }
+                                }
+                                .line2{
+                                    font-size: $ft-content;
+                                    color: #666666;
                                 }
                             }
                         }
@@ -146,9 +161,10 @@
                             display: flex;
                             flex-direction: row-reverse;
                             align-items: flex-start;
-                            padding: 30px;
+                            padding: 20px;
+                            height: 80px;
                             span{
-                                font-size: 18px;
+                                font-size: $ft-title;
                             }
                             .price{
                                 color: #ff2600;
@@ -171,7 +187,7 @@
                     align-items: center;
                     span{
                         color: #0036fc;
-                        font-size: 16px;
+                        font-size: $ft-title-s;
                         display: block;
                         width: 130px;
                         height: 100%;
@@ -182,17 +198,17 @@
                     }
                 }
                 .content{
-                    padding: 50px 60px;
+                    padding: 25px 30px;
                     width: 60%;
                     min-width: 700px;
                     .form-group{
                         input[type="text"]{
                             border-radius: 20px;
-                            font-size: 15px;
+                            font-size: $ft-content;
                             padding-left: 30px;
                         }
                         .tip{
-                            font-size: 13px;
+                            font-size: $ft-tip;
                             color: #cccccc;
                             margin-left: 30px;
                             margin-top: 10px;
@@ -202,12 +218,12 @@
                         display: flex;
                         align-items: center;
                         span:nth-child(2){
-                            font-size: 18px;
+                            font-size: $ft-title;
                             color: #333333;
                             margin-left: 20px;
                         }
                         span:nth-child(3){
-                            font-size: 13px;
+                            font-size: $ft-tip;
                             color: #999999;
                             margin-left: 5px;
                         }
@@ -216,13 +232,13 @@
                     .invoice{
                         width: 100%;
                         .radio-grooup{
-                            margin: 30px 0 0 30px;
+                            margin: 20px 0 0 30px;
                             label{
                                 margin-right: 50px
                             }
                         }
                         .panel1{
-                            margin: 20px 0 0 30px;
+                            margin: 10px 0 0 30px;
                         }
                         .panel3{
                             margin: 20px 0 0 30px;
@@ -241,12 +257,13 @@
                         .panel2{
                             margin: 30px 0 0 30px;
                             .address-title{
+                                margin-bottom: 20px;
                                 span:nth-child(1){
-                                    font-size: 18px;
+                                    font-size: $ft-title;
                                     color: #333333;
                                 }
                                 span:nth-child(2){
-                                    font-size: 13px;
+                                    font-size: $ft-tip;
                                     color: #999999;
                                     margin-left: 5px;
                                 }
@@ -254,14 +271,14 @@
                             .line1{
                                 display: flex;
                                 .form-group{
-                                    margin-right: 15px;
+                                    margin-right: $ft-content;
                                     width: 50%;
                                 }
                             }
                             .line2{
                                 display: flex;
                                 .form-group{
-                                    margin-right: 15px;
+                                    margin-right: $ft-content;
                                     width: 200px;
                                 }
                             }
@@ -284,7 +301,7 @@
                     align-items: center;
                     span{
                         color: #0036fc;
-                        font-size: 16px;
+                        font-size: $ft-title-s;
                         display: block;
                         width: 130px;
                         height: 100%;
@@ -295,7 +312,7 @@
                     }
                 }
                 .pay-way-img{
-                    margin: 30px;
+                    margin: 20px 30px 30px 20px;
                     width: 110px;
                     height: 40px;
                     border-radius: 30px;

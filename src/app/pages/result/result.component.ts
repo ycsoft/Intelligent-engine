@@ -16,10 +16,10 @@ import { SmallTypeColorService } from 'app/services/small-type-color.service';
     animations: [
         trigger('resultState', [
             state('inactive', style({
-                transform: 'translateX(580px)'
+                width: '22px'
             })),
             state('active', style({
-                transform: 'translateX(0)'
+                width: '33%'
             })),
             transition('inactive => active', [animate('300ms ease-in')]),
             transition('active => inactive', [animate('300ms ease-out')])
@@ -71,7 +71,7 @@ export class ResultComponent implements OnInit {
 
     currentPage = 4;
 
-    isCheckAll = true;
+    isCheckAll = false;
 
     type = 'type1';
 
@@ -84,6 +84,8 @@ export class ResultComponent implements OnInit {
     totalMoney = 0;
 
     keywords = '';
+
+    result = null;
 
     constructor(private dataService: DataService,
         private chartDataService: ChartDataService,
@@ -115,7 +117,7 @@ export class ResultComponent implements OnInit {
             //     top: 'bottom',
             //     left: 'right'
             // },
-            tooltip: {},
+            // tooltip: {},
             // legend: [{
             //     // selectedMode: 'single',
             //     data: categories.map(function (a) {
@@ -139,7 +141,10 @@ export class ResultComponent implements OnInit {
                     label: {
                         normal: {
                             position: 'right',
-                            formatter: '{b}'
+                            formatter: '{b}',
+                            textStyle: {
+                                fontSize: 14
+                            }
                         }
                     },
                     lineStyle: {
@@ -168,19 +173,12 @@ export class ResultComponent implements OnInit {
             return;
         }
         if (event.type === 'click') {
-            if (event.data.free === 0) {
-                event.data.selected = !event.data.selected;
-                event.data.itemStyle.normal.color = event.data.selected ?
-                    this.smallTypeColorService.getColor('选中').color : this.smallTypeColorService.getColor(event.data.small).color;
-                this.addOrRemoveInCharList(event.data);
-                this.resizeChart();
-                this.getTotalMoney();
-                if (this.chartlist.length === 0) {
-                    this.type = 'type1';
-                } else {
-                    this.type = 'type3';
-                }
-            }
+            event.data.selected = !event.data.selected;
+            event.data.itemStyle.normal.color = event.data.selected ?
+                this.smallTypeColorService.getColor(event.data.small).color : '#cccccc';
+            this.addOrRemoveInCharList(event.data);
+            this.resizeChart();
+            this.getTotalMoney();
         }
     }
 
@@ -194,7 +192,7 @@ export class ResultComponent implements OnInit {
             }
         }
         if (isExist === false) {
-            obj.checked = true;
+            obj.selected = true;
             this.chartlist.push(obj);
         }
     }
@@ -237,12 +235,13 @@ export class ResultComponent implements OnInit {
             this.searchResource.search({ keywords: keywords }, (result: Result) => {
                 // console.log('searchResult:', result);
             }).$observable.subscribe((result: Result) => {
+                this.result = result;
                 this.type = 'type1';
                 this.chartlist.length = 0;
                 const data = this.chartDataService.getChartData(result.data);
                 this.freeOne = this.chartDataService.getFree(result.data);
                 this.setChartOption(data.categories, data.nodes, data.links);
-                this.chartlist.push(this.freeOne);
+                // this.chartlist.push(this.freeOne);
             });
         }
     }
@@ -250,22 +249,48 @@ export class ResultComponent implements OnInit {
     private getTotalMoney() {
         this.totalMoney = 0;
         this.chartlist.forEach(element => {
-            if (element.checked) {
+            if (element.selected) {
                 this.totalMoney += element.price * (element.contentSize - element.free);
             }
         });
     }
 
     checked(element) {
-        element.checked = !element.checked;
+        element.selected = !element.selected;
+        if (element.selected === false) {
+            this.addOrRemoveInCharList(element);
+        }
+        const series = this.chartOption.series[0];
+        const ele1 = series.data.find((ele) => ele.rule_id === ele.rule_id);
+        if (ele1) {
+            ele1.selected = element.selected;
+            this.setChartOption(series.categories, series.data, series.links);
+            this.resizeChart();
+        }
         this.getTotalMoney();
     }
 
     checkAll() {
         this.isCheckAll = !this.isCheckAll;
-        this.chartlist.forEach((element) => {
-            element.checked = this.isCheckAll;
-        });
+        const series = this.chartOption.series[0];
+        this.chartlist = [];
+        if (this.isCheckAll) {
+            series.data.forEach(element => {
+                element.selected = true;
+                element.itemStyle.normal.color = element.selected ?
+                    this.smallTypeColorService.getColor(element.small).color : '#cccccc';
+                this.chartlist.push(element);
+            });
+        } else {
+            series.data.forEach(element => {
+                element.selected = false;
+                element.itemStyle.normal.color = element.selected ?
+                    this.smallTypeColorService.getColor('选中').color : this.smallTypeColorService.getColor(element.small).color;
+            });
+        }
+        this.setChartOption(series.categories, series.data, series.links);
+        this.resizeChart();
+        this.getTotalMoney();
     }
 
     toPay() {
@@ -277,7 +302,7 @@ export class ResultComponent implements OnInit {
     filterChecked(chartlist) {
         const array = [];
         chartlist.forEach(element => {
-            if (element.checked) {
+            if (element.selected) {
                 array.push(element);
             }
         });

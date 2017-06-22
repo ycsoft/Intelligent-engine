@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SessionStorageService } from 'app/services/session-storage.service';
 import { ChartDataService } from 'app/services/chart-data.service';
 import { Order } from 'app/beans/order';
@@ -9,6 +9,8 @@ import { FormControl } from '@angular/forms';
 import { OrderResource } from 'app/resources/order.resource';
 import { ProvinceCityService } from 'app/services/province-city.service';
 import { DataResource } from 'app/resources/data.resource';
+
+declare var $: any;
 
 @Component({
     selector: 'app-order',
@@ -35,6 +37,8 @@ export class OrderComponent implements OnInit {
     value;
 
     @ViewChild('orderForm') orderForm: FormControl;
+
+    @ViewChild('invoiceChoice') invoiceChoice: ElementRef;
 
     constructor(private sessionStorageService: SessionStorageService,
         private chartDataService: ChartDataService,
@@ -82,7 +86,7 @@ export class OrderComponent implements OnInit {
 
     private getChartOption(categories, nodes, links) {
         return {
-            tooltip: {},
+            // tooltip: {},
 
             animationDurationUpdate: 1500,
             animationEasingUpdate: 'quinticInOut',
@@ -116,8 +120,11 @@ export class OrderComponent implements OnInit {
 
     submitOrder() {
         this.order.total_amount = 0.01;
+        const newTab = window.open('about:blank');
         this.orderResource.postOrder(this.order, (result: Result) => {
-            location.href = result.data;
+            // location.href = result.data;
+            newTab.location.href = result.data;
+            // window.open(result.data, '_blank');
             console.log('url:', result.data);
         });
     }
@@ -141,5 +148,14 @@ export class OrderComponent implements OnInit {
 
     public selectedCity(value: any) {
         this.order.city = value.id;
+    }
+
+    public focus() {
+        setTimeout(() => {
+
+            $('.result-container1').animate({
+                'scrollTop': 1000
+            }, 500);
+        }, 100);
     }
 }

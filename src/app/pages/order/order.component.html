@@ -4,9 +4,9 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/icon_order_active.png">
+                <img src="assets/images/icon_order_active.svg">
             </div>
-            <span>订单确认</span>
+            <span class="active">订单确认</span>
         </div>
         <div class="state-right">
             <div class="box"></div>
@@ -17,7 +17,7 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/icon_payment_inactive.png">
+                <img src="assets/images/icon_payment_inactive.svg">
             </div>
             <span>支付成功</span>
         </div>
@@ -26,7 +26,7 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/order_report_inactive.png">
+                <img src="assets/images/order_report_inactive.svg">
             </div>
             <span>查看报告</span>
         </div>
@@ -69,9 +69,9 @@
                     <form class="content" #orderForm="ngForm">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="电子邮件" [(ngModel)]="order.email" name="email" appEmail required>
-                            <label class="tip">必填项：购买成功后我们将会发送报告至您的邮箱</label>
+                            <label class="tip"><span style="color:red;">*必填项：购买成功后我们将会发送报告至您的邮箱</span></label>
                         </div>
-                        <div class="invoice-choice">
+                        <div class="invoice-choice" #invoiceChoice (click)="focus()">
                             <app-check class="blue" [isChecked]="order.invoice" (onChange)="order.invoice=!order.invoice"></app-check>
                             <span>申请发票</span>
                             <span>（开票金额为用户实际支付金额）</span>
@@ -117,7 +117,7 @@
                                         <input type="text" class="form-control" placeholder="联系人" [(ngModel)]="order.contacts" name="contacts" >
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="手机号码" [(ngModel)]="order.phone" name="phone"  appMobile>
+                                        <input type="text" class="form-control" placeholder="手机号码" [(ngModel)]="order.phone" name="phone" >
                                     </div>
                                 </div>
                                 <div class="line2">
@@ -150,7 +150,7 @@
                 </div>
                 <div class="pay-way">
                     <div class="title">
-                        <span>订单信息</span>
+                        <span>支付方式</span>
                     </div>
                     <div class="content">
                         <div class="pay-way-img">
@@ -161,7 +161,7 @@
             </div>
             <div class="footer">
                 <div>
-                    <button type="button" class="btn btn-red" (click)="submitOrder()" [disabled]="orderForm.invalid">提交订单</button>
+                    <button type="button" class="btn btn-red" (click)="submitOrder()" [disabled]="orderForm.invalid">付&nbsp;&nbsp;&nbsp;&nbsp;款</button>
                 </div>
             </div>
         </div>

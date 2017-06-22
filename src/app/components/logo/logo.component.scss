@@ -1,12 +1,13 @@
 .logo{
     position: absolute;
     left: 0;
-    width: 80px;
+    width: 70px;
     background-color: #0036fc;
     height: 100%;
+    z-index: 11;
     .logo-container{
         width: 100%;
-        padding: 20px;
+        padding: 10px 16px;
         img {
             width: 100%;
         }

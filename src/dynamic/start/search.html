@@ -21,7 +21,7 @@
             outline: none;
             font-size:18px;
             margin-left:15px;
-            width: 90%;
+            width: 100%;
             height: 42px;
             color: #333;
         }
@@ -30,19 +30,21 @@
             outline: 0;
         }
         .content{
-            margin-top: 10%;
-            text-align: center;
-            width: 100%;
-        }
-        .content > div{
-            width: 600px;
+            position: fixed;
+            vertical-align: middle;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -45%);
+            -webkit-transform: translate(-50%, -45%);
+            -moz-transform: translate(-50%, -45%);
             text-align: left;
-            margin: auto;
+            transition: 1s;
+            width: 50%;
+            min-width: 300px;
         }
         .search-box{
-            border: 4px solid #001cb9;
+            border: 3px solid #001cb9;
             border-radius: 25px;
-            width: 600px;
             height: 50px;
             margin: auto;
             display: flex;
@@ -54,6 +56,7 @@
             transition: transform 0.2s;
             transform: scale(1);
             cursor: pointer;
+            padding: 0 10px 0 0;
         }
         .search-box > img:hover{
             transform: scale(1.1);
@@ -62,15 +65,36 @@
             box-shadow: 2px 2px 7px #888888;
         }
         .logo{
-            margin-top:10%;
             text-align:center;
-            width:100%;
+            position: fixed;
+            vertical-align: middle;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -15%);
+            -webkit-transform: translate(-50%, -15%);
+            -moz-transform: translate(-50%, -15%);
+            transition: 1s;
         }
         .logo>img{
             transition: transform 0.2s;
+            height: 100%;
+            width: 100%;
         }
         .logo>img:hover{
             transform: scale(1.1);
+        }
+
+        #myCloudTag{
+            position: fixed;
+            vertical-align: middle;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -80%);
+            -webkit-transform: translate(-50%, -80%);
+            -moz-transform: translate(-50%, -80%);
+            text-align: left;
+            transition: 1s;
+            width: 100%;
         }
     </style>
 </head>
@@ -80,17 +104,65 @@
         <img src="logo_index.png">
     </div>
     <div class="content">
-        <div>
             <div class="search-box">
-                <input id="search" type="text" placeholder="请输入您需要查询的特征" onkeypress="keyPress(event)">
+                <input id="search" type="text" placeholder="爱吃零食 早起 拖延症 关注健康 淘宝控" onkeypress="keyPress(event)" onfocus="hidePlaceholder()" onblur="showPlaceholder()">
                 <img src="icon_search.png" onclick="search()">
             </div>
-            <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;">@Copyright UniDI All rights reserved.</p>
-        </div>
+            <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;">@Copyright UniDT All rights reserved.</p>
     </div>
+    <div id="myCloudTag">
+      <canvas width="600" height="350" id="myTag">
+        <p>Anything in here will be replaced on browsers that support the canvas element</p>
+      </canvas>
+    </div>
+    <div id="tags" style="display:none">
+      <ul>
+        <li><a href="#" style="font-size:30px;">认证考试</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#">信息安全</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#" style="font-size:30px;">认证考试</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#">信息安全</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#" style="font-size:30px;">认证考试</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#">信息安全</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#" style="font-size:30px;">认证考试</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+        <li><a href="#">信息安全</a></li>
+        <li><a href="#">UMTS OMSTAR </a></li>
+        <li><a href="#">客户经理角色认知</a></li>
+        <li><a href="#">PM角色</a></li>
+        <li><a href="#">维修</a></li>
+      </ul>
+    </div>
+    <script src="tagcanvas.min.js" type="text/javascript"></script>
     <script>
+        var searchInput = document.getElementById('search');
         var search = function(){
-            var searchInput = document.getElementById('search');
             var keywords = searchInput && searchInput.value;
             if(keywords){
                 location.href = 'http://www.fraplus.cn/fra/result/'+ keywords;
@@ -102,6 +174,39 @@
                 search();
             }
         }
+
+        var hidePlaceholder =function(){
+            searchInput.setAttribute('placeholder', '');
+        }
+
+        var showPlaceholder =function(event){
+            searchInput.setAttribute('placeholder', '爱吃零食 早起 拖延症 关注健康 淘宝控');
+        }
+
+        var myTag = document.getElementById('myTag');
+        myTag.setAttribute('width', document.body.offsetWidth);
+        window.onload = function() {
+            try {
+                TagCanvas.Start('myTag','tags',{
+                textColour: '#63cdff',
+                outlineColour: '#63cdff',
+                reverse: true,
+                depth: 0.8,
+                maxSpeed: 0.05
+                });
+            } catch(e) {
+                document.getElementById('myCloudTag').style.display = 'none';
+            }
+        };
+
+
+        function changeshape(s) {
+            var locks = { hcylinder: 'x', vcylinder: 'y', hring: 'x', vring: 'y', sphere: '' };
+            lock = locks[s] || '';
+            shape = s;
+            TagCanvas.initial = (lock == 'x' && [0,0.2]) || (lock == 'y' && [0.2,0]) || [0.2,0.2];
+        }
+        changeshape('vcylinder')
     </script>
 </body>
 
