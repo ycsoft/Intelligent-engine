@@ -6,12 +6,13 @@ html{
         position: fixed;
         left: 0;
         top: 0;
-        width: 80px;
+        width: 70px;
         background-color: #0036fc;
         height: 100%;
+        z-index: 11;
         .logo-container{
-            width: 45px;
-            padding: 20px;
+            width: 35px;
+            padding: 10px 20px;
             img {
                 width: 100%;
             }
@@ -22,28 +23,38 @@ html{
         position: fixed;
         background: transparent;
         left: 0;
-        top: 0;
         height: 100%;
-        width: 90px;
-        padding-top: 120px;
+        width: 80px;
+        padding-top: 40px;
         overflow: hidden;
+        top: 80px;
+        z-index: 11;
         .state{
             display: flex;
             flex-direction: row;
             .state-left{
                 text-align: center;
-                width: 80px;
+                width: 70px;
                 height: 90px;
                 padding: 10px 0;
                 .img-box{
                     display: block;
+                    width: 35px;
+                    margin: auto;
+                    >img{
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
                 span{
                     display: block;
-                    color: #cccccc;
+                    color: white;
+                    opacity: 0.5;
+                    margin-top: 10px;
+                    font-size: 14px;
                 }
                 .active{
-                    color: white;
+                    opacity: 1;
                 }
             }
             .state-right{
@@ -67,31 +78,36 @@ html{
         }
         .dsahed-line{
             border-right: 1px dashed #ccc;
-            height: 100px;
+            height: 80px;
             width: 1px;
-            margin: 20px 0;
-            margin-left: 40px;
+            margin: 15px 0;
+            margin-left: 35px;
         }
     }
 }
 
 .search-bar{
     width: 100%;
-    height: 64px;
-    position: absolute;
+    height: 50px;
+    position: fixed;
     left: 0;
     top: 0;
+    overflow: hidden;
     .search-container{
         background-color: #f2f5ff;
+        height: 50px;
+        margin-left: 70px;
+        display: flex;
         justify-content: space-between;
-        margin-left: 80px;
-        height: 100%;
+        align-items: center;
         .search-input{
             background-color: #e6ebff;
             width: 500px;
             height: 100%;
             padding-left: 50px;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             input{
                 border: none;
                 background-color: transparent;
@@ -101,23 +117,25 @@ html{
                 color: #999999;
             }
             .search-img{
-                height: 100%;
-                padding-right: 50px;
+                padding-right: 10px;
+                cursor: pointer;
+                height: 30px;
+                width: 50px;
+                line-height: 50px;
                 img{
-                    margin: 100%;
+                    height: 100%;
+                    width: 100%;
                 }
             }
         }
         .buttons-right{
-            height: 100%;
-            line-height: 64px;
             padding-right: 40px;
-            float: right;
             span{
                 font-size: 16px;
                 color: #0036fc;
                 text-decoration: underline;
                 padding: 0 3px;
+                cursor: pointer;
             }
         }
     }
@@ -128,7 +146,7 @@ html{
     height: 100%;
     overflow: hidden;
     .content{
-        padding: 74px 40px 40px 130px;
+        padding: 64px 30px 40px 100px;
         .title{
             border-bottom: 1px solid #0036fc;
             font-size: 18px;
@@ -186,8 +204,8 @@ html{
 }
 
 body::-webkit-scrollbar {
-  height: 6px;
-  width: 6px; }
+  height: 3px;
+  width: 3px; }
 
 body::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); }
@@ -195,3 +213,18 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: #0036fc;
   outline: 1px solid #333; }
+
+.search-input>input::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #b2bce6;
+}
+.search-input>input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #b2bce6;
+   opacity:  1;
+}
+.search-input>input::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #b2bce6;
+   opacity:  1;
+}
+.search-input>input:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #b2bce6;
+}

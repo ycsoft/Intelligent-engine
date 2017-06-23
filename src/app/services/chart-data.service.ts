@@ -13,7 +13,7 @@ export class ChartDataService {
     /**
      * getCharData
      */
-    public getChartData(array: ChartBean[]) {
+    public getChartData(array: ChartBean[], isSelected = false, ratio = 1) {
         const links = [];
         const nodes = [];
         const categories = [];
@@ -40,18 +40,21 @@ export class ChartDataService {
                 //     }
                 // });
                 smallObj = {
+                    id: ++index,
                     rule_id: chartBean.rule_id,
                     name: chartBean.small,
                     small: chartBean.small,
                     value: chartBean.size,
-                    symbolSize: this.getSize(chartBean.size),
+                    symbolSize: this.getSize(chartBean.size * ratio),
                     // category: index,
                     free: chartBean.free,
                     price: chartBean.price,
-                    type: 'big',
+                    type: 'small',
                     contentSize: 1,
                     size: chartBean.size,
-                    selected: false,
+                    selected: isSelected,
+                    content: chartBean.content,
+                    hasFree: chartBean.free,
                     label: {
                         normal: {
                             show: true
@@ -59,14 +62,19 @@ export class ChartDataService {
                     },
                     itemStyle: {
                         normal: {
-                            color: '#cccccc'
+                            color: this.smallTypeColorService.getColor(chartBean.small).color,
                         }
                     }
                 };
                 nodes.push(smallObj);
-
-
             } else {
+                if (!chartBean.free) {
+                    smallObj.rule_id = chartBean.rule_id;
+                    smallObj.content = '';
+                    smallObj.free = chartBean.free;
+                } else {
+                    smallObj.hasFree = 1;
+                }
                 smallObj.contentSize += 1;
             }
             // const contentObj = {
@@ -104,13 +112,55 @@ export class ChartDataService {
             //   });
             // }
         });
-        console.log('links:', links);
-        console.log('nodes:', nodes);
+        // console.log('links:', links);
+        // console.log('nodes:', nodes);
+        const free = array.find((element) => element.free);
+        if (free) {
+            const contentObj = {
+                id: ++index,
+                rule_id: free.rule_id,
+                name: `${free.content}(免费)`,
+                small: free.small,
+                value: free.size,
+                symbolSize: 10,
+                // category: index,
+                free: free.free,
+                price: free.price,
+                type: 'content',
+                contentSize: 0,
+                size: free.size,
+                selected: true,
+                content: free.content,
+                label: {
+                    normal: {
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: this.smallTypeColorService.getColor(free.small).color,
+                    }
+                }
+            };
+            const small = nodes.find((element) => element.small === contentObj.small);
+            nodes.push(contentObj);
+            links.push({
+                source: small.id,
+                target: contentObj.id,
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            });
+        }
+
         this.chartData = {
             links: links,
             nodes: nodes,
             categories: categories
         };
+        console.log('chartData: ', this.chartData);
         return this.chartData;
     }
 
@@ -160,8 +210,8 @@ export class ChartDataService {
         });
     }
 
-    private getSize(x: number) {
-        return 10 + Math.exp(10 * (1.3 * x - 0.9));
+    private getSize(x: number, ratio = 1) {
+        return (10 + Math.exp(10 * (1.3 * x - 0.9))) * ratio;
         // return Math.pow(Math.E, 5 * (x-0.2));
         // return 67.1121 * x * x - 9.7788 * x + 6.2160;
     }

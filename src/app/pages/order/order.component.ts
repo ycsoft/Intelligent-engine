@@ -52,14 +52,21 @@ export class OrderComponent implements OnInit {
             this.keywords = params['keywords'];
             this.chartlist = this.sessionStorageService.getItem('chartlist');
             this.order.total_amount = this.totalMoney = this.sessionStorageService.getItem('totalMoney');
-            this.order.rules = this.getRuleIds(this.chartlist);
+            this.order.rules = this.sessionStorageService.getItem('rule_ids');
             this.order.order_no = Guid.newGuid();
             this.order.keywords = this.keywords;
-            const data = this.chartDataService.getChartData(this.chartlist);
+            const data = this.chartDataService.getChartData(this.chartlist, true, 0.9);
             this.chartOption = this.getChartOption(data.categories, data.nodes, data.links);
             this.chartlist.forEach(element => {
-                const data1 = this.chartDataService.getChartData([element]);
-                element.chartOption = this.getChartOption(data1.categories, data1.nodes, data1.links);
+                // if (!element.free) {
+                    const data1 = this.chartDataService.getChartData([element], true, 0.9);
+
+                    const chartOption = this.getChartOption(data1.categories, data1.nodes, data1.links);
+                    chartOption.series[0].width = '40%';
+                    chartOption.series[0].height = '40%';
+                    chartOption.series[0].left = '70%';
+                    element.chartOption = chartOption;
+                // }
             });
 
             this.setProvince();
@@ -101,6 +108,9 @@ export class OrderComponent implements OnInit {
                     data: nodes,
                     links: links,
                     roam: true,
+                    width: '50%',
+                    height: '50%',
+                    left: 'center',
                     label: {
                         normal: {
                             position: 'right',

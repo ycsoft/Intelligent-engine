@@ -13,15 +13,15 @@
 <body>
     <div class="left">
         <div class="logo">
-            <div class="logo-container">
-                <img src="logo.png">
+            <div class="logo-container" onclick="goMain()">
+                <img src="nav_logo.svg">
             </div>
         </div>
         <div class="order-state">
             <div class="state">
                 <div class="state-left">
                     <div class="img-box">
-                        <img src="icon_order_inactive.png">
+                        <img src="nav_order_inactive.svg">
                     </div>
                     <span>订单确认</span>
                 </div>
@@ -30,7 +30,7 @@
             <div class="state">
                 <div class="state-left">
                     <div class="img-box">
-                        <img src="icon_payment_inactive.png">
+                        <img src="nav_report_inactive.svg">
                     </div>
                     <span>支付成功</span>
                 </div>
@@ -39,7 +39,7 @@
             <div class="state">
                 <div class="state-left">
                     <div class="img-box">
-                        <img src="icon_report_active.png">
+                        <img src="nav_report_active.svg">
                     </div>
                     <span class="active">查看报告</span>
                 </div>
@@ -53,12 +53,12 @@
 
     <div class="search-bar">
         <div class="search-container">
-            <!--<div class="search-input">
-                <input type="text" placeholder="请输入您需要查询的特征" [(ngModel)]="keywords" (keypress)="keypress($event)">
-                <div class="search-img" (click)="submit()">
-                    <img src="assets/images/icon_search.png">
+            <div class="search-input">
+                <input id="search" type="text" placeholder="请输入您需要查询的特征" onkeypress="keyPress(event)" onfocus="hidePlaceholder()" onblur="showPlaceholder()">
+                <div class="search-img" onclick="search()">
+                    <img src="top_search.svg">
                 </div>
-            </div>-->
+            </div>
             <div class="buttons-right">
                 <!--<span>打印</span>
                 <span>|</span>-->
@@ -75,7 +75,7 @@
             <div class="list">
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -150,7 +150,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -165,7 +165,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="item">
                     <div class="item-left">
-                        <img src="icon_feature_1.png">
+                        <img src="report_film.svg">
                     </div>
                     <div class="item-right">
                         <div class="item-title">文学影视偏好</div>
@@ -196,7 +196,35 @@
             </div>
         </div>
     </div>
+    <script>
+        var searchInput = document.getElementById('search');
 
+        var goMain =function(){
+            var keywords = searchInput && searchInput.value;
+            location.href = 'http://www.fraplus.cn/fra/result/'+ keywords;
+                // location.href = 'http://localhost:4200/result/'+ keywords;
+        }
+
+        var search = function(){
+            var keywords = searchInput && searchInput.value;
+            if(keywords){
+                goMain();
+            }
+        }
+        var keyPress = function(event){
+            if(event.keyCode === 13){
+                search();
+            }
+        }
+
+        var hidePlaceholder =function(){
+            searchInput.setAttribute('placeholder', '');
+        }
+
+        var showPlaceholder =function(event){
+            searchInput.setAttribute('placeholder', '请输入您需要查询的特征');
+        }
+    </script>
 </body>
 
 </html>

@@ -16,20 +16,22 @@ import { SmallTypeColorService } from 'app/services/small-type-color.service';
     animations: [
         trigger('resultState', [
             state('inactive', style({
-                width: '22px'
+                width: '22px',
+                'min-width': '0'
             })),
             state('active', style({
-                width: '33%'
+                width: '33%',
+                'min-width': '550px'
             })),
-            transition('inactive => active', [animate('300ms ease-in')]),
-            transition('active => inactive', [animate('300ms ease-out')])
+            transition('inactive => active', [animate('100ms ease-in')]),
+            transition('active => inactive', [animate('100ms ease-out')])
         ]),
         trigger('reportState', [
             state('state1', style({
                 transform: 'translateX(0)'
             })),
             state('state2', style({
-                transform: 'translateX(150px)'
+                transform: 'translateX(120px)'
             })),
             transition('state1 <=> state2', animate('100ms ease-in-out'))
         ]),
@@ -136,8 +138,9 @@ export class ResultComponent implements OnInit {
                     },
                     data: nodes,
                     links: links,
-                    categories: categories,
                     roam: true,
+                    width: '60%',
+                    height: '60%',
                     label: {
                         normal: {
                             position: 'right',
@@ -172,14 +175,14 @@ export class ResultComponent implements OnInit {
         if (typeof event.seriesIndex === 'undefined') {
             return;
         }
-        if (event.type === 'click') {
-            event.data.selected = !event.data.selected;
-            event.data.itemStyle.normal.color = event.data.selected ?
-                this.smallTypeColorService.getColor(event.data.small).color : '#cccccc';
-            this.addOrRemoveInCharList(event.data);
-            this.resizeChart();
-            this.getTotalMoney();
-        }
+        // if (event.type === 'click') {
+        //     event.data.selected = !event.data.selected;
+        //     event.data.itemStyle.normal.color = event.data.selected ?
+        //         this.smallTypeColorService.getColor(event.data.small).color : '#cccccc';
+        //     this.addOrRemoveInCharList(event.data);
+        //     this.resizeChart();
+        //     this.getTotalMoney();
+        // }
     }
 
     private addOrRemoveInCharList(obj) {
@@ -233,7 +236,7 @@ export class ResultComponent implements OnInit {
         this.keywords = keywords;
         if (this.keywords) {
             this.searchResource.search({ keywords: keywords }, (result: Result) => {
-                // console.log('searchResult:', result);
+                console.log('searchResult:', result);
             }).$observable.subscribe((result: Result) => {
                 this.result = result;
                 this.type = 'type1';
@@ -241,7 +244,23 @@ export class ResultComponent implements OnInit {
                 const data = this.chartDataService.getChartData(result.data);
                 this.freeOne = this.chartDataService.getFree(result.data);
                 this.setChartOption(data.categories, data.nodes, data.links);
-                // this.chartlist.push(this.freeOne);
+                data.nodes.forEach(element => {
+                    this.chartlist.push(element);
+                });
+
+                const rules = this.sessionStorageService.getItem('rule_ids');
+                if (rules !== null && rules.length > 0) {
+                    const ids = rules.split('-');
+                    ids.forEach(id => {
+                        const chart = this.chartlist.find((element) => element.rule_id === id);
+                        if (chart !== undefined) {
+                            chart.selected = true;
+                        }
+                    });
+                }
+
+                this.isCheckAll = this.isCheckedAll();
+                this.getTotalMoney();
             });
         }
     }
@@ -249,53 +268,79 @@ export class ResultComponent implements OnInit {
     private getTotalMoney() {
         this.totalMoney = 0;
         this.chartlist.forEach(element => {
-            if (element.selected) {
-                this.totalMoney += element.price * (element.contentSize - element.free);
+            if (element.selected && !element.free) {
+                const list = this.result.data.filter((ele) => ele.small === element.small);
+                list.forEach(ele => {
+                    this.totalMoney += ele.price;
+                });
+                if (element.hasFree) {
+                    const free = this.result.data.find((ele) => ele.free);
+                    if (free) {
+                        this.totalMoney -= element.price;
+                    }
+                }
             }
+            // if (element.free) {
+            //     this.totalMoney -= element.price;
+            // }
         });
     }
 
     checked(element) {
         element.selected = !element.selected;
-        if (element.selected === false) {
-            this.addOrRemoveInCharList(element);
-        }
-        const series = this.chartOption.series[0];
-        const ele1 = series.data.find((ele) => ele.rule_id === ele.rule_id);
-        if (ele1) {
-            ele1.selected = element.selected;
-            this.setChartOption(series.categories, series.data, series.links);
-            this.resizeChart();
-        }
+        // if (element.selected === false) {
+        //     this.addOrRemoveInCharList(element);
+        // }
+        // const series = this.chartOption.series[0];
+        // const ele1 = series.data.find((ele) => ele.rule_id === ele.rule_id);
+        // if (ele1) {
+        //     ele1.selected = element.selected;
+        //     this.setChartOption(series.categories, series.data, series.links);
+        //     this.resizeChart();
+        // }
+        this.isCheckAll = this.isCheckedAll();
         this.getTotalMoney();
     }
 
     checkAll() {
         this.isCheckAll = !this.isCheckAll;
-        const series = this.chartOption.series[0];
-        this.chartlist = [];
-        if (this.isCheckAll) {
-            series.data.forEach(element => {
-                element.selected = true;
-                element.itemStyle.normal.color = element.selected ?
-                    this.smallTypeColorService.getColor(element.small).color : '#cccccc';
-                this.chartlist.push(element);
-            });
-        } else {
-            series.data.forEach(element => {
-                element.selected = false;
-                element.itemStyle.normal.color = element.selected ?
-                    this.smallTypeColorService.getColor('选中').color : this.smallTypeColorService.getColor(element.small).color;
-            });
-        }
-        this.setChartOption(series.categories, series.data, series.links);
-        this.resizeChart();
-        this.getTotalMoney();
+        this.chartlist.forEach((element) => {
+            element.selected = this.isCheckAll;
+        });
+
+        // this.isCheckAll = !this.isCheckAll;
+        // const series = this.chartOption.series[0];
+        // this.chartlist = [];
+        // if (this.isCheckAll) {
+        //     series.data.forEach(element => {
+        //         element.selected = true;
+        //         element.itemStyle.normal.color = element.selected ?
+        //             this.smallTypeColorService.getColor(element.small).color : '#cccccc';
+        //         this.chartlist.push(element);
+        //     });
+        // } else {
+        //     series.data.forEach(element => {
+        //         element.selected = false;
+        //         element.itemStyle.normal.color = element.selected ?
+        //             this.smallTypeColorService.getColor(element.small).color : '#cccccc';
+        //     });
+        // }
+        // this.setChartOption(series.categories, series.data, series.links);
+        // this.resizeChart();
+        // this.getTotalMoney();
     }
 
     toPay() {
-        this.sessionStorageService.setItem('chartlist', this.filterChecked(this.chartlist));
+        const filtered = this.filterChecked(this.chartlist);
+        const free = this.chartlist.find((element) => element.free);
+        const small = this.chartlist.find((element) => element.small === free.small && !element.free);
+        if (small && !small.selected) {
+            small.realFree = true;
+            filtered.push(small);
+        }
+        this.sessionStorageService.setItem('chartlist', filtered);
         this.sessionStorageService.setItem('totalMoney', this.totalMoney);
+        this.sessionStorageService.setItem('rule_ids', this.getRuleIds(this.chartlist));
         this.router.navigate(['/order', this.keywords]);
     }
 
@@ -307,5 +352,27 @@ export class ResultComponent implements OnInit {
             }
         });
         return array;
+    }
+
+    private getRuleIds(chartlist) {
+        let ids = '';
+        const filtered = this.filterChecked(this.chartlist);
+        filtered.forEach((ele1) => {
+            if (ele1.free) {
+                ids += ele1.rule_id + '-';
+            } else {
+                this.result.data.forEach(ele2 => {
+                    if (ele2.small === ele1.small) {
+                        ids += ele2.rule_id + '-';
+                    }
+                });
+            }
+
+        });
+        return ids.substring(0, ids.length - 1);
+    }
+
+    private isCheckedAll() {
+        return this.chartlist.find((element) => element.selected === false) === undefined;
     }
 }

@@ -8,31 +8,29 @@
     height: 24px;
     display: inline-block;
     vertical-align: middle;
-    background: url('../../../assets/images/red.png') no-repeat left;
-    background-position: 0 0;
+    background: url('../../../assets/images/order_radiobox_nor.png') no-repeat;
     cursor: pointer;
 }
 
-:host.blue > div > div {
-    background: url('../../../assets/images/blue.png') no-repeat left;
-    background-position: 0 0;
+:host > div > div:hover {
+    background: url('../../../assets/images/order_radiobox_hover_red.png') no-repeat;
 }
 
-:host > div > div:hover {
-    background-position: -24px 0;
+:host.blue > div > div:hover {
+    background: url('../../../assets/images/order_radiobox_hover_blue.png') no-repeat;
 }
 
 :host > div > div.disabled {
-    background-position: -72px 0;
+    background: url('../../../assets/images/order_radiobox_nor_disabled.png') no-repeat;
     cursor: default;
 }
 
 :host > div > div.checked {
-    background-position: -48px 0;
+    background: url('../../../assets/images/order_radiobox_active_red.png') no-repeat;
 }
 
-:host > div > div.checked.disabled {
-    background-position: -96px 0;
+:host.blue > div > div.checked {
+    background: url('../../../assets/images/order_radiobox_active_blue.png') no-repeat;
 }
 
 :host .label {

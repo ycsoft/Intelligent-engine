@@ -4,7 +4,7 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/icon_order_active.svg">
+                <img src="assets/images/nav_order_active.svg">
             </div>
             <span class="active">订单确认</span>
         </div>
@@ -17,7 +17,7 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/icon_payment_inactive.svg">
+                <img src="assets/images/nav_report_inactive.svg">
             </div>
             <span>支付成功</span>
         </div>
@@ -26,14 +26,14 @@
     <div class="state">
         <div class="state-left">
             <div class="img-box">
-                <img src="assets/images/order_report_inactive.svg">
+                <img src="assets/images/nav_report_inactive_1.svg">
             </div>
             <span>查看报告</span>
         </div>
     </div>
 </div>
 <div class="main-container">
-    <app-search-bar [keywords]="keywords" (onChange)="search($event)"></app-search-bar>
+    <app-search-bar (onChange)="search($event)"></app-search-bar>
     <div class="result-container">
         <div class="result-container1">
             <div class="result-container2">
@@ -46,14 +46,19 @@
                             <div echarts [options]="chartOption" class="main-chart"></div>
                         </div>
                         <div class="content-right">
-                            <div class="item" *ngFor="let item of chartlist">
-                                <div echarts [options]="item.chartOption" class="main-chart item-left"></div>
-                                <div class="item-right">
-                                    <div class="line1">
-                                        <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.free">，减免1条</span>）</span></h1>
-                                        <span class="price"><span [ngClass]="{'price-free':item.free}" *ngIf="item.free">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.free) * item.price | rmb}}</span>
+                            <div *ngFor="let item of chartlist">
+                                <div class="item" *ngIf="!item.free">
+                                    <div echarts [options]="item.chartOption" class="main-chart item-left"></div>
+                                    <div class="item-right">
+                                        <div class="line1">
+                                            <h1>{{item.free?item.small + '-' + item.name:item.name}}<span>（共{{item.free?1:item.contentSize}}条特征<span *ngIf="item.hasFree">，减免1条</span>）</span>
+                                            </h1>
+                                            <span *ngIf="!item.realFree" class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.hasFree)
+                                            * item.price | rmb}}</span>
+                                            <span *ngIf="item.realFree" class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.price | rmb}}</span>{{0 | rmb}}</span>
+                                        </div>
+                                        <div class="line2">购买以查看详细策略</div>
                                     </div>
-                                    <div class="line2">购买以查看详细策略</div>
                                 </div>
                             </div>
                             <div class="item total">

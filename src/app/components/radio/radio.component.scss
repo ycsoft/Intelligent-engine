@@ -12,31 +12,29 @@
     height: 24px;
     display: inline-block;
     vertical-align: middle;
-    background: url('../../../assets/images/red.png') no-repeat left;
-    background-position: -120px 0;
+    background: url('../../../assets/images/order_checkcircle_nor.png') no-repeat;
     cursor: pointer;
 }
 
-:host.blue > div > div {
-    background: url('../../../assets/images/blue.png') no-repeat left;
-    background-position: -120px 0;
+:host > div > div:hover {
+    background: url('../../../assets/images/order_checkcircle_hover_red.png') no-repeat;
 }
 
-:host > div > div:hover {
-    background-position: -144px 0;
+:host.blue > div > div:hover {
+    background: url('../../../assets/images/order_checkcircle_hover_blue.png') no-repeat;
 }
 
 :host > div > div.disabled {
-    background-position: -192px 0;
+    background: url('../../../assets/images/order_checkcircle_nor_disabled.png') no-repeat;
     cursor: default;
 }
 
 :host > div > div.checked {
-    background-position: -168px 0;
+    background: url('../../../assets/images/order_checkcircle_active_red.png') no-repeat;
 }
 
-:host > div > div.checked.disabled {
-    background-position: -216px 0;
+:host.blue > div > div.checked {
+    background: url('../../../assets/images/order_checkcircle_active_blue.png') no-repeat;
 }
 
 :host .label {
