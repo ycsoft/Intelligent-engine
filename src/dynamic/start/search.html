@@ -16,11 +16,11 @@
             color: #666;
         }
 
-        .search-box > input {
+        .search-box>input {
             border: none;
             outline: none;
-            font-size:18px;
-            margin-left:15px;
+            font-size: 18px;
+            margin-left: 15px;
             width: 100%;
             height: 42px;
             color: #333;
@@ -29,7 +29,8 @@
         input:hover {
             outline: 0;
         }
-        .content{
+
+        .content {
             position: fixed;
             vertical-align: middle;
             top: 45%;
@@ -42,7 +43,8 @@
             width: 50%;
             min-width: 300px;
         }
-        .search-box{
+
+        .search-box {
             border: 3px solid #001cb9;
             border-radius: 25px;
             height: 50px;
@@ -52,20 +54,24 @@
             align-items: center;
             transition: all 0.2s;
         }
-        .search-box > img{
+
+        .search-box>img {
             transition: transform 0.2s;
             transform: scale(1);
             cursor: pointer;
             padding: 0 10px 0 0;
         }
-        .search-box > img:hover{
+
+        .search-box>img:hover {
             transform: scale(1.1);
         }
-        .search-box:hover{
+
+        .search-box:hover {
             box-shadow: 2px 2px 7px #888888;
         }
-        .logo{
-            text-align:center;
+
+        .logo {
+            text-align: center;
             position: fixed;
             vertical-align: middle;
             top: 15%;
@@ -75,26 +81,30 @@
             -moz-transform: translate(-50%, -15%);
             transition: 1s;
         }
-        .logo>img{
+
+        .logo>img {
             transition: transform 0.2s;
             height: 100%;
             width: 100%;
         }
-        .logo>img:hover{
+
+        .logo>img:hover {
             transform: scale(1.1);
         }
 
-        #myCloudTag{
-            position: fixed;
+        #echart {
+            position: absolute;
             vertical-align: middle;
-            top: 80%;
+            top: 90%;
             left: 50%;
-            transform: translate(-50%, -80%);
-            -webkit-transform: translate(-50%, -80%);
-            -moz-transform: translate(-50%, -80%);
+            transform: translate(-50%, -90%);
+            -webkit-transform: translate(-50%, -90%);
+            -moz-transform: translate(-50%, -90%);
             text-align: left;
             transition: 1s;
             width: 100%;
+            height: 45%;
+            bottom: 0;
         }
     </style>
 </head>
@@ -104,109 +114,164 @@
         <img src="logo_index.png">
     </div>
     <div class="content">
-            <div class="search-box">
-                <input id="search" type="text" placeholder="爱吃零食 早起 拖延症 关注健康 淘宝控" onkeypress="keyPress(event)" onfocus="hidePlaceholder()" onblur="showPlaceholder()">
-                <img src="icon_search.png" onclick="search()">
-            </div>
-            <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;">@Copyright UniDT All rights reserved.</p>
+        <div class="search-box">
+            <input id="search" type="text" placeholder="爱吃零食 早起 拖延症 关注健康 淘宝控" onkeypress="keyPress(event)" onfocus="hidePlaceholder()"
+                onblur="showPlaceholder()">
+            <img src="icon_search.png" onclick="search()">
+        </div>
     </div>
-    <div id="myCloudTag">
-      <canvas width="600" height="350" id="myTag">
-        <p>Anything in here will be replaced on browsers that support the canvas element</p>
-      </canvas>
+    <div style="position: fixed; bottom:0;text-align: center;width:100%;">
+        <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;padding:auto;">沪ICP备09008869号-4 沪公网安备 31011002000007号</p>
+        <p style="font-size:10px;color:#b8b8b8;padding-left: 15px;">@Copyright UniDT All rights reserved.</p>
     </div>
-    <div id="tags" style="display:none">
-      <ul>
-        <li><a href="#" style="font-size:30px;">认证考试</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#">信息安全</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#" style="font-size:30px;">认证考试</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#">信息安全</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#" style="font-size:30px;">认证考试</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#">信息安全</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#" style="font-size:30px;">认证考试</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-        <li><a href="#">信息安全</a></li>
-        <li><a href="#">UMTS OMSTAR </a></li>
-        <li><a href="#">客户经理角色认知</a></li>
-        <li><a href="#">PM角色</a></li>
-        <li><a href="#">维修</a></li>
-      </ul>
-    </div>
-    <script src="tagcanvas.min.js" type="text/javascript"></script>
+    <div id="echart"></div>
+    <script src="http://unidt.oss-cn-shanghai.aliyuncs.com/fraplus/echarts.min.js" type="text/javascript"></script>
     <script>
         var searchInput = document.getElementById('search');
-        var search = function(){
+        var search = function () {
             var keywords = searchInput && searchInput.value;
-            if(keywords){
-                location.href = 'http://www.fraplus.cn/fra/result/'+ keywords;
+            if (keywords) {
+                location.href = 'http://www.fraplus.cn/fra/result/' + keywords;
                 // location.href = 'http://localhost:4200/result/'+ keywords;
             }
         }
-        var keyPress = function(event){
-            if(event.keyCode === 13){
+        var keyPress = function (event) {
+            if (event.keyCode === 13) {
                 search();
             }
         }
 
-        var hidePlaceholder =function(){
+        var hidePlaceholder = function () {
             searchInput.setAttribute('placeholder', '');
         }
 
-        var showPlaceholder =function(event){
+        var showPlaceholder = function (event) {
             searchInput.setAttribute('placeholder', '爱吃零食 早起 拖延症 关注健康 淘宝控');
         }
 
-        var myTag = document.getElementById('myTag');
-        myTag.setAttribute('width', document.body.offsetWidth);
-        window.onload = function() {
-            try {
-                TagCanvas.Start('myTag','tags',{
-                textColour: '#63cdff',
-                outlineColour: '#63cdff',
-                reverse: true,
-                depth: 0.8,
-                maxSpeed: 0.05
-                });
-            } catch(e) {
-                document.getElementById('myCloudTag').style.display = 'none';
-            }
-        };
-
-
-        function changeshape(s) {
-            var locks = { hcylinder: 'x', vcylinder: 'y', hring: 'x', vring: 'y', sphere: '' };
-            lock = locks[s] || '';
-            shape = s;
-            TagCanvas.initial = (lock == 'x' && [0,0.2]) || (lock == 'y' && [0.2,0]) || [0.2,0.2];
+        var getRandomNumber = function (m, n) {
+            var x = n - m;
+            Math.random() * x;
+            var num = Math.random() * x + m;
+            return parseInt(num, 10);
         }
-        changeshape('vcylinder')
+
+        var getPosition = function(data){
+            var position = {
+                x: getX(data),
+                y: getY(data)
+            };
+            console.log(position);
+            return position;
+        }
+
+        var getX =function(data){
+            var zf = getRandomNumber(0, 1);
+            var x = zf === 0 ? getRandomNumber(0, 400) * -1 : getRandomNumber(0, 400);
+            if(isInRange(data, x, 'x')){
+                return getX(data);
+            }else{
+                return x;
+            }
+        }
+
+        var getY =function(data){
+            var zf = getRandomNumber(0, 1);
+            var y = zf === 0 ? getRandomNumber(0, 100) * -1 : getRandomNumber(0, 100);
+            if(isInRange(data, y, 'y')){
+                return getY(data);
+            }else{
+                return y;
+            }
+        }
+
+        var isInRange = function(data, num2, key){
+            // var size = 2;
+            // for(var i=0;i<data.length;i++){
+            //     if(Math.abs(Math.abs(data[i][key])-Math.abs(num2))<size){
+            //         return true;
+            //     }
+            // }
+            return false;
+        }
+
+        var buildNodes = function (keys, colors) {
+            var data = [];
+            for (var i = 0; i < keys.length; i++) {
+                var position = getPosition(data);
+                var node = {
+                    id: i + '',
+                    name: keys[i],
+                    value: getRandomNumber(5, 60),
+                    symbolSize: 0.01,
+                    x: position.x,
+                    y: position.y,
+                    itemStyle: {
+                        normal: {
+                            color: '#005397',
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {
+                                fontSize: getRandomNumber(8, 25),
+                                color: colors[getRandomNumber(1, 32)]
+                            }
+                        }
+                    }
+                }
+                data.push(node);
+            }
+            return data;
+        }
+
+        // var keys = [
+        //         {name: '爱吃零食',x:0,y:0},
+        //         {name: '爱吃甜食',x:400,y:0},
+        //         {name: '爱喝咖啡',x:-400,y:0},
+        //         {name: '爱运动',x:0,y:100},
+        //         {name: '低调',x:0,y:-100},
+        //         {name: '高风险投资',x:0,y:-100}
+        //     ]
+        var words = ['爱吃零食', '爱吃甜食', '爱喝咖啡', '爱运动', '低调', '高风险投资', '关注健康', '价格导向', '纠结',
+            '乐观', '理性内向', '努力', '暖色调', '偶喜欢玩', '爬山', '跑步', '烹饪', '平面设计', '谦逊', '强迫症', '巧克力',
+            '亲情', '淘宝控', '拖延症', '外向', '文艺青年', '喜欢橙色', '喜欢点赞', '喜欢锻炼', '喜欢看电影', '喜欢听歌',
+            '小众电影', '摇滚迷', '早起', '宅'];
+        var colors = ["#ff2600", "#ff6d00", "#ff8b8b", "#facbc2", "#e62565", "#9b2fae", "#673fb4", "#9c9cdd",
+            "#0036fc", "#4054b2", "#005397", "#2b98f0", "#1eaaf1", "#1fbcd2", "#00fdff", "#b4ebf1", "#055a5b",
+            "#167c80", "#198e6d", "#4da348", "#8bc052", "#cdda49", "#f0f3c5", "#b6cac0", "#fee94e", "#ffaa00",
+            "#fd9727", "#eeb200", "#efce69", "#ccbe5e", "#feebb6", "#f3c9dd"];
+        var data = buildNodes(words, colors);
+        var links = [];
+
+        var myChart = echarts.init(document.getElementById("echart"));
+        option = {
+            animationDuration: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series: [
+                {
+                    name: 'Les Miserables',
+                    type: 'graph',
+                    layout: 'none',
+                    data: data,
+                    roam: false,
+                    label: {
+                        normal: {
+                            position: 'right',
+                            formatter: '{b}'
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: 'source',
+                            curveness: 0.3
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
     </script>
 </body>
 

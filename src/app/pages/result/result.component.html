@@ -15,7 +15,7 @@
             <div class="header" [hidden]="resultState==='inactive'">
                 <div class="header-container">
                     <div class="tab-header" (click)="reportState='state1'" [ngClass]="{'active':reportState==='state1'}" (click)="changeContentPage(1)">购买列表</div>
-                    <div class="tab-header" (click)="reportState='state2'" [ngClass]="{'active':reportState==='state2'}" (click)="changeContentPage(2)">应用案例</div>
+                    <div class="tab-header"  [ngClass]="{'active':reportState==='state2'}" (click)="changeContentPage(2)">应用案例</div>
                     <div class="active-header" [@reportState]="reportState"></div>
                 </div>
             </div>
@@ -23,21 +23,20 @@
                 <div class="content-free" [hidden]="resultState==='inactive'">
                     <div class="desc">
                         <div class="circle"></div>
-                        <div class="desc-text">{{freeOne.small}}<br>{{freeOne.content}}</div>
+                        <div class="desc-text">{{freeOne.chartBean.small}}<br>{{freeOne.chartBean.content}}</div>
                     </div>
                     <div class="desc-content">
                         <div class="list">
                             <div *ngFor="let item of chartlist">
-                                <div class="item" *ngIf="!item.free">
+                                <div class="item" *ngIf="item.contentList.length>0">
                                     <div class="item-left">
-                                        <app-check [isChecked]="item.selected" (onChange)="checked(item)"></app-check>
+                                        <app-check [isChecked]="item.chartBean.checked" (onChange)="checked(item)"></app-check>
                                     </div>
                                     <div class="item-right">
                                         <div class="line1">
-                                            <h1>{{item.name}}<span>（共{{item.contentSize}}条特征<span *ngIf="item.hasFree">，减免1条</span>）</span>
+                                            <h1>{{item.chartBean.small}}<span>（共{{item.contentList.length}}条特征<span *ngIf="item.hasFree">，减免1条</span>）</span>
                                             </h1>
-                                            <span class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.hasFree)*
-                                            item.price | rmb}}</span>
+                                            <span class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.totalPrice | rmb}}</span>{{item.discountPrice | rmb}}</span>
                                         </div>
                                         <div class="line2">购买以查看详细策略</div>
                                     </div>
@@ -78,7 +77,7 @@
                 </div>
                 <div>
                     <span>总价：<span class="price">{{totalMoney | rmb}}</span></span>
-                    <button [disabled]="filterChecked(chartlist).length===0" type="button" class="btn btn-red" (click)="toPay()">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+                    <button type="button" class="btn btn-red" (click)="toPay()">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
                 </div>
             </div>
         </div>

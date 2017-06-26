@@ -47,15 +47,13 @@
                         </div>
                         <div class="content-right">
                             <div *ngFor="let item of chartlist">
-                                <div class="item" *ngIf="!item.free">
+                                <div class="item" *ngIf="item.contentList.length>0">
                                     <div echarts [options]="item.chartOption" class="main-chart item-left"></div>
                                     <div class="item-right">
                                         <div class="line1">
-                                            <h1>{{item.free?item.small + '-' + item.name:item.name}}<span>（共{{item.free?1:item.contentSize}}条特征<span *ngIf="item.hasFree">，减免1条</span>）</span>
+                                            <h1>{{item.chartBean.small}}<span>（共{{item.contentList.length}}条特征<span *ngIf="item.hasFree">，减免1条</span>）</span>
                                             </h1>
-                                            <span *ngIf="!item.realFree" class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.contentSize * item.price | rmb}}</span>{{(item.contentSize-item.hasFree)
-                                            * item.price | rmb}}</span>
-                                            <span *ngIf="item.realFree" class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.price | rmb}}</span>{{0 | rmb}}</span>
+                                            <span class="price"><span [ngClass]="{'price-free':item.hasFree}" *ngIf="item.hasFree">{{item.totalPrice | rmb}}</span>{{item.discountPrice | rmb}}</span>
                                         </div>
                                         <div class="line2">购买以查看详细策略</div>
                                     </div>
@@ -74,7 +72,8 @@
                     <form class="content" #orderForm="ngForm">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="电子邮件" [(ngModel)]="order.email" name="email" appEmail required>
-                            <label class="tip"><span style="color:red;">*必填项：购买成功后我们将会发送报告至您的邮箱</span></label>
+                            <label [hidden]="order.errors.email" class="tip"><span style="color:red;">*必填项：购买成功后我们将会发送报告至您的邮箱</span></label>
+                            <label [hidden]="!order.errors.email" class="tip"><span style="color:red;">*必填项：请填写正确的邮箱</span></label>
                         </div>
                         <div class="invoice-choice" #invoiceChoice (click)="focus()">
                             <app-check class="blue" [isChecked]="order.invoice" (onChange)="order.invoice=!order.invoice"></app-check>
@@ -88,27 +87,29 @@
                             </div>
                             <div class="panel1" *ngIf="order.inv_type==='common'">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="发票抬头" [(ngModel)]="order.inv_header"  name="inv_header" >
+                                    <input type="text" class="form-control" placeholder="发票抬头" [(ngModel)]="order.inv_header"  name="inv_header" required maxlength="30">
+                                    <label [hidden]="order.errors.inv_header" class="tip"><span style="color:red;">*必填项</span></label>
+                                    <label [hidden]="!order.errors.inv_header" class="tip"><span style="color:red;">*必填项：请填写正确发票抬头</span></label>
                                 </div>
 
                             </div>
                             <div class="panel3" *ngIf="order.inv_type==='addedValueTax'">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="单位全称" [(ngModel)]="order.company_name" name="company_name" >
+                                    <input type="text" class="form-control" placeholder="单位全称" [(ngModel)]="order.company_name" name="company_name" maxlength="30">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="单位地址" [(ngModel)]="order.company_addr" name="company_addr" >
+                                    <input type="text" class="form-control" placeholder="单位地址" [(ngModel)]="order.company_addr" name="company_addr" maxlength="30">
                                 </div>
                                 <div class="line">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="银行账号" [(ngModel)]="order.bank_account" name="bank_account" >
+                                        <input type="text" class="form-control" placeholder="银行账号" [(ngModel)]="order.bank_account" name="bank_account" maxlength="30">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="开户行" [(ngModel)]="order.open_bank" name="open_bank" >
+                                        <input type="text" class="form-control" placeholder="开户行" [(ngModel)]="order.open_bank" name="open_bank" maxlength="30">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="税务登记号" [(ngModel)]="order.tax_no" name="tax_no" >
+                                    <input type="text" class="form-control" placeholder="税务登记号" [(ngModel)]="order.tax_no" name="tax_no" maxlength="30">
                                 </div>
                             </div>
                             <div class="panel2">
@@ -119,10 +120,14 @@
 
                                 <div class="line1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="联系人" [(ngModel)]="order.contacts" name="contacts" >
+                                        <input type="text" class="form-control" placeholder="联系人" [(ngModel)]="order.contacts" name="contacts" required maxlength="30">
+                                        <label [hidden]="order.errors.contacts" class="tip"><span style="color:red;">*必填项：此地址为发票寄送地址</span></label>
+                                        <label [hidden]="!order.errors.contacts" class="tip"><span style="color:red;">*必填项：请填写正确的联系地址</span></label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="手机号码" [(ngModel)]="order.phone" name="phone" >
+                                        <input type="text" class="form-control" placeholder="手机号码" [(ngModel)]="order.phone" name="phone" required appMobile maxlength="11">
+                                        <label [hidden]="order.errors.phone" class="tip"><span style="color:red;">*必填项</span></label>
+                                        <label [hidden]="!order.errors.phone" class="tip"><span style="color:red;">*必填项：请填写正确的联系号码</span></label>
                                     </div>
                                 </div>
                                 <div class="line2">
@@ -146,7 +151,7 @@
                                         </select>-->
                                     </div>
                                     <div class="form-group" style="width:100%">
-                                        <input type="text" class="form-control" placeholder="请填写详细地址" [(ngModel)]="order.address" name="address" >
+                                        <input type="text" class="form-control" placeholder="请填写详细地址" [(ngModel)]="order.address" name="address" maxlength="30">
                                     </div>
                                 </div>
                             </div>
@@ -166,9 +171,11 @@
             </div>
             <div class="footer">
                 <div>
-                    <button type="button" class="btn btn-red" (click)="submitOrder()" [disabled]="orderForm.invalid">付&nbsp;&nbsp;&nbsp;&nbsp;款</button>
+                    <button type="button" class="btn btn-red" (click)="submitOrder()" >付&nbsp;&nbsp;&nbsp;&nbsp;款</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+

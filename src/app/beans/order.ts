@@ -18,6 +18,7 @@ export class Order {
     order_no = '';
     total_amount = 0;
     keywords = '';
+    errors = <any>{};
 
     constructor() {
 

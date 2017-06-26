@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'app/services/session-storage.service';
 import { SearchResource } from 'app/resources/search.resource';
 import { SmallTypeColorService } from 'app/services/small-type-color.service';
+import { AlertService } from "app/services/alert.service";
+import { AlertType } from "app/beans/alert-type.enum";
 
 @Component({
     selector: 'app-result-component',
@@ -79,7 +81,7 @@ export class ResultComponent implements OnInit {
 
     chartOption = null;
 
-    freeOne: ChartBean = <ChartBean>{};
+    freeOne: any = <any>{ chartBean: {} };
 
     chartlist = [];
 
@@ -89,13 +91,16 @@ export class ResultComponent implements OnInit {
 
     result = null;
 
+    chartData = undefined;
+
     constructor(private dataService: DataService,
         private chartDataService: ChartDataService,
         private searchResource: SearchResource,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private sessionStorageService: SessionStorageService,
-        private smallTypeColorService: SmallTypeColorService) {
+        private smallTypeColorService: SmallTypeColorService,
+        private alertService: AlertService) {
     }
 
     ngOnInit(): void {
@@ -111,7 +116,7 @@ export class ResultComponent implements OnInit {
         });
     }
 
-    private setChartOption(categories, nodes, links) {
+    private setChartOption(categories, nodes, lines) {
         this.chartOption = {
             // title: {
             //     text: 'Les Miserables',
@@ -137,7 +142,7 @@ export class ResultComponent implements OnInit {
                         rotateLabel: true
                     },
                     data: nodes,
-                    links: links,
+                    links: lines,
                     roam: true,
                     width: '60%',
                     height: '60%',
@@ -221,46 +226,59 @@ export class ResultComponent implements OnInit {
     }
 
     changeContentPage(index: number) {
-        if (this.currentPageNumber < index) {
-            this['contentPage' + this.currentPageNumber + 'State'] = 'state1';
-            this['contentPage' + index + 'State'] = 'state2';
-        } else if (this.currentPageNumber > index) {
-            this['contentPage' + this.currentPageNumber + 'State'] = 'state3';
-            this['contentPage' + index + 'State'] = 'state2';
+        // if (this.currentPageNumber < index) {
+        //     this['contentPage' + this.currentPageNumber + 'State'] = 'state1';
+        //     this['contentPage' + index + 'State'] = 'state2';
+        // } else if (this.currentPageNumber > index) {
+        //     this['contentPage' + this.currentPageNumber + 'State'] = 'state3';
+        //     this['contentPage' + index + 'State'] = 'state2';
+        // }
+        // this.currentPageNumber = index;
+        if(index === 2){
+            const newTab = window.open('about:blank');
+            newTab.location.href = 'http://www.fractalplus.cn/#scroll-5';
         }
-        this.currentPageNumber = index;
     }
 
 
     search(keywords: string) {
         this.keywords = keywords;
         if (this.keywords) {
+            this.keywords = keywords.replace(/\,|\，/g,' ');
             this.searchResource.search({ keywords: keywords }, (result: Result) => {
                 console.log('searchResult:', result);
             }).$observable.subscribe((result: Result) => {
-                this.result = result;
-                this.type = 'type1';
-                this.chartlist.length = 0;
-                const data = this.chartDataService.getChartData(result.data);
-                this.freeOne = this.chartDataService.getFree(result.data);
-                this.setChartOption(data.categories, data.nodes, data.links);
-                data.nodes.forEach(element => {
-                    this.chartlist.push(element);
-                });
+                if (result.data.length === 0) {
 
-                const rules = this.sessionStorageService.getItem('rule_ids');
-                if (rules !== null && rules.length > 0) {
-                    const ids = rules.split('-');
-                    ids.forEach(id => {
-                        const chart = this.chartlist.find((element) => element.rule_id === id);
-                        if (chart !== undefined) {
-                            chart.selected = true;
-                        }
+                    this.alertService.alert({
+                        type: AlertType.info,
+                        msg: '没有查到内容，请输入其他关键词试试！'
+                    })
+                } else {
+                    this.result = result;
+                    this.type = 'type1';
+                    this.chartlist.length = 0;
+                    this.chartData = this.chartDataService.getChartData(result.data);
+                    this.freeOne = this.chartDataService.getFree(this.chartData.nodes);
+                    this.setChartOption([], this.chartData.nodes, this.chartData.lines);
+                    this.chartData.nodes.forEach(element => {
+                        this.chartlist.push(element);
                     });
-                }
 
-                this.isCheckAll = this.isCheckedAll();
-                this.getTotalMoney();
+                    const rules = this.sessionStorageService.getItem('rule_ids');
+                    if (rules !== null && rules.length > 0) {
+                        const ids = rules.split('-');
+                        ids.forEach(id => {
+                            const chart = this.chartlist.find((element) => element.chartBean.rule_id === id);
+                            if (chart !== undefined) {
+                                chart.chartBean.checked = true;
+                            }
+                        });
+                    }
+
+                    this.isCheckAll = this.isCheckedAll();
+                    this.getTotalMoney();
+                }
             });
         }
     }
@@ -268,26 +286,14 @@ export class ResultComponent implements OnInit {
     private getTotalMoney() {
         this.totalMoney = 0;
         this.chartlist.forEach(element => {
-            if (element.selected && !element.free) {
-                const list = this.result.data.filter((ele) => ele.small === element.small);
-                list.forEach(ele => {
-                    this.totalMoney += ele.price;
-                });
-                if (element.hasFree) {
-                    const free = this.result.data.find((ele) => ele.free);
-                    if (free) {
-                        this.totalMoney -= element.price;
-                    }
-                }
+            if (element.chartBean.checked && element.contentList.length > 0) {
+                this.totalMoney += element.discountPrice;
             }
-            // if (element.free) {
-            //     this.totalMoney -= element.price;
-            // }
         });
     }
 
     checked(element) {
-        element.selected = !element.selected;
+        element.chartBean.checked = !element.chartBean.checked;
         // if (element.selected === false) {
         //     this.addOrRemoveInCharList(element);
         // }
@@ -305,7 +311,7 @@ export class ResultComponent implements OnInit {
     checkAll() {
         this.isCheckAll = !this.isCheckAll;
         this.chartlist.forEach((element) => {
-            element.selected = this.isCheckAll;
+            element.chartBean.checked = this.isCheckAll;
         });
 
         // this.isCheckAll = !this.isCheckAll;
@@ -327,18 +333,28 @@ export class ResultComponent implements OnInit {
         // }
         // this.setChartOption(series.categories, series.data, series.links);
         // this.resizeChart();
-        // this.getTotalMoney();
+        this.getTotalMoney();
     }
 
     toPay() {
         const filtered = this.filterChecked(this.chartlist);
-        const free = this.chartlist.find((element) => element.free);
-        const small = this.chartlist.find((element) => element.small === free.small && !element.free);
-        if (small && !small.selected) {
-            small.realFree = true;
-            filtered.push(small);
+        const freeNode = this.chartlist.find((element) => element.chartBean.free && element.contentList.length > 0);
+        if (freeNode.chartBean.checked === false) {
+            const list = freeNode.contentList.filter((element) => element.free);
+            if (list.length > 0) {
+                freeNode.contentList = list;
+                freeNode.totalPrice = list[0].price;
+                freeNode.discountPrice = 0;
+            }
+            filtered.push(freeNode);
+            filtered.push(this.chartlist.find((element) => element.chartBean.free && element.contentList.length === 0));
         }
-        this.sessionStorageService.setItem('chartlist', filtered);
+        const array = [];
+        filtered.forEach((element) => {
+            array.push(element);
+        });
+        this.chartData.nodes = array;
+        this.sessionStorageService.setItem('chartData', this.chartData);
         this.sessionStorageService.setItem('totalMoney', this.totalMoney);
         this.sessionStorageService.setItem('rule_ids', this.getRuleIds(this.chartlist));
         this.router.navigate(['/order', this.keywords]);
@@ -347,7 +363,7 @@ export class ResultComponent implements OnInit {
     filterChecked(chartlist) {
         const array = [];
         chartlist.forEach(element => {
-            if (element.selected) {
+            if (element.chartBean.checked) {
                 array.push(element);
             }
         });
@@ -358,21 +374,20 @@ export class ResultComponent implements OnInit {
         let ids = '';
         const filtered = this.filterChecked(this.chartlist);
         filtered.forEach((ele1) => {
-            if (ele1.free) {
-                ids += ele1.rule_id + '-';
-            } else {
-                this.result.data.forEach(ele2 => {
-                    if (ele2.small === ele1.small) {
-                        ids += ele2.rule_id + '-';
+            if (ele1.contentList.length > 0) {
+                ele1.contentList.forEach(element => {
+                    if (!element.free) {
+                        ids += element.rule_id + '-';
                     }
                 });
             }
-
         });
-        return ids.substring(0, ids.length - 1);
+        const free = this.result.data.find((element) => element.free);
+        ids += free.rule_id;
+        return ids;
     }
 
     private isCheckedAll() {
-        return this.chartlist.find((element) => element.selected === false) === undefined;
+        return this.chartlist.find((element) => element.chartBean.checked === false) === undefined;
     }
 }

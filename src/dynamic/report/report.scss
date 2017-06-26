@@ -1,4 +1,82 @@
+@mixin report-content {
+    .title{
+        border-bottom: 1px solid #0036fc;
+        font-size: 18px;
+        color: #333333;
+        line-height: 50px;
+        span{
+            display: block;
+            border-bottom: 1px solid #0036fc;
+            padding-left: 30px;
+            padding-right: 30px;
+            display: inline-block;
+        }
+        .logo{
+            float: right;
+            width: 110px;
+        }
+    }
+    .list{
+        padding: 15px 0 0 0;
+        .item{
+            width: 410px;
+            height: 300px;
+            padding: 30px 25px 30px 25px;
+            float: left;
+            .item-left{
+                width: 40px;
+                height: 40px;
+                padding-right: 30px;
+                min-width: 40px;
+                min-height: 40px;
+                display: inline-block;
+                img{
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+            .item-right{
+                padding-top: 5px;
+                display: inline-block;
+                width: 330px;
+                vertical-align: top;
+                .item-title{
+                    font-size: 18px;
+                    color: #333333;
+                }
+                .item-list{
+                    padding-top: 20px;
+                    font-size: 14px;
+                    color: #666666;
+                    > .item-list-item{
+                        line-height: 30px;
+                        div{
+                            display: inline-block;
+                        }
+                        >div:nth-child(1){
+                            width: 5px;
+                            height: 5px;
+                            background: #666666;
+                            margin-right: 15px;
+                            border-radius: 50%;
+                            margin-bottom: 2px;
+                        }
+                        div:nth-child(2){
+                            width: 280px;
+                            vertical-align: top;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 html{
+}
+body{
+    font-family: 'Microsoft YaHei', 'CenturyGothic', "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
 }
 
 .left{
@@ -147,59 +225,16 @@ html{
     overflow: hidden;
     .content{
         padding: 64px 30px 40px 100px;
-        .title{
-            border-bottom: 1px solid #0036fc;
-            font-size: 18px;
-            color: #333333;
-            line-height: 50px;
-        }
-        .list{
-            padding: 15px 0 0 0;
-            .item{
-                width: 410px;
-                height: 300px;
-                padding: 30px 25px 30px 25px;
-                float: left;
-                .item-left{
-                    width: 40px;
-                    height: 40px;
-                    padding-right: 30px;
-                    min-width: 40px;
-                    min-height: 40px;
-                    display: inline-block;
-                    img{
-                        height: 100%;
-                        width: 100%;
-                    }
-                }
-                .item-right{
-                    padding-top: 5px;
-                    display: inline-block;
-                    width: 330px;
-                    vertical-align: top;
-                    .item-title{
-                        font-size: 18px;
-                        color: #333333;
-                    }
-                    .item-list{
-                        padding-top: 20px;
-                        font-size: 14px;
-                        color: #666666;
-                        > .item-list-item{
-                            line-height: 30px;
-                            div{
-                                padding-right: 15px;
-                                display: inline-block;
-                            }
-                            div:nth-child(2){
-                                width: 280px;
-                                vertical-align: top;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        @include report-content;
+    }
+}
+
+.conent-container1{
+    width: 100%;
+    height: 100%;
+    .content{
+        padding: 20px 30px 40px 40px;
+        @include report-content;
     }
 }
 
@@ -227,4 +262,83 @@ body::-webkit-scrollbar-thumb {
 }
 .search-input>input:-ms-input-placeholder { /* Internet Explorer 10+ */
    color:    #b2bce6;
+}
+
+.cover{
+    background-image: url(report_bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    .logo{
+        width: 130px;
+        margin: auto;
+        height: 30%;
+        img{
+            padding-top: 80%;
+        }
+    }
+    .title-box{
+        text-align: center;
+        height: 40%;
+        .title{
+            font-size: 45px;
+            color: #000000;
+            padding-top: 10%;
+        }
+        .date{
+            font-size: 12px;
+            color: #000000;
+            margin-top: 10px;
+        }
+    }
+    >.coryright{
+        color: #000000;
+        opacity: 0.5;
+        font-size: 10px;
+        padding-top: 10%;
+        height: 30%;
+        .dot{
+            background: #000000;
+            border-radius: 50%;
+            display: inline-block;
+            width: 2px;
+            height:2px;
+            margin: 0 10px;
+        }
+        .line{
+            margin: 0 20px;
+        }
+    }
+}
+
+// .copyright{
+//     color: #000000;
+//     opacity: 0.5;
+//     font-size: 10px;
+//     position: absolute;
+//     bottom: 0;
+//     .dot{
+//         background: #000000;
+//         border-radius: 50%;
+//         display: inline-block;
+//         width: 2px;
+//         height:2px;
+//         margin: 0 10px;
+//     }
+//     .line{
+//         margin: 0 20px;
+//     }
+// }
+
+.content{
+    margin-left: 70px;
+    margin-top: 50px;
+    position: absolute;
+    iframe{
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
 }

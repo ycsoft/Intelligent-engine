@@ -10,6 +10,7 @@
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
     "build:prod": "ng build --prod --base-href /fra",
+    "build:local": "ng build --prod --base-href /fra --environment=local",
     "lite-server": "lite-server -c=bs-config.json"
   },
   "private": true,

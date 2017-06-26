@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    server1: 'http://116.62.168.168:8888',
-    mianPage: 'http://www.fraplus.cn'
+    server1: 'http://120.132.21.168:8888',
+    mianPage: 'http://120.132.21.168'
 };
