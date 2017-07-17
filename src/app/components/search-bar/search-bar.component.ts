@@ -34,7 +34,14 @@ export class SearchBarComponent implements OnInit {
     search() {
         // this.sessionStorageService.setItem('keywords', this.keywords);
         // this.onChange.emit(this.keywords);
-        this.sessionStorageService.clear();
-        this.router.navigate(['/result', this.keywords]);
+        // this.sessionStorageService.clear();
+        const user = this.sessionStorageService.getItem('user');
+        const token = this.sessionStorageService.getItem('token');
+        const money = this.sessionStorageService.getItem('money');
+
+        console.log(token)
+        const url = '/result/' + this.keywords + '/' + user + '/' + token + '/' + money;
+        this.router.navigateByUrl(url)
+        // this.router.navigate(['/result', this.keywords]);
     }
 }

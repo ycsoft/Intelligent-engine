@@ -88,6 +88,9 @@ export class ResultComponent implements OnInit {
     totalMoney = 0;
 
     keywords = '';
+    user = undefined
+    token = undefined;
+    money = 0;
 
     result = null;
 
@@ -106,6 +109,20 @@ export class ResultComponent implements OnInit {
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
             this.keywords = params['keywords'];
+            this.user = params['user'];
+            this.token = params['token'];
+            this.money = params['money'];
+
+            console.log(this.keywords);
+            console.log(this.user);
+            console.log(this.token);
+            console.log(this.money);
+
+            //
+            // 保存用户会话信息
+            this.sessionStorageService.setItem('user',this.user);
+            this.sessionStorageService.setItem('token',this.token);
+            this.sessionStorageService.setItem('money',this.money);
             // this.dataService.search(this.keywords).then((result) => {
             //     const data = this.chartDataService.getChartData(result);
             //     this.freeOne = this.chartDataService.getFree(result);
@@ -174,6 +191,11 @@ export class ResultComponent implements OnInit {
         if (this.echartsIntance) {
             this.echartsIntance.resize();
         }
+    }
+
+    aboutMe() {
+        var url = 'http://localhost:8080/#/orders/' + this.user + '/' + this.token + '/' + this.money
+        let nw = window.open(url);
     }
 
     onChartClick(event) {

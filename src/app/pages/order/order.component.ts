@@ -34,6 +34,11 @@ export class OrderComponent implements OnInit {
 
     keywords = '';
 
+    // 用户会话信息
+    user = '';
+    token = '';
+    money = '';
+
     provinces = [];
 
     cities = [];
@@ -60,6 +65,12 @@ export class OrderComponent implements OnInit {
             const chartData = this.sessionStorageService.getItem('chartData');
             this.order.total_amount = this.totalMoney = this.sessionStorageService.getItem('totalMoney');
             this.order.rules = this.sessionStorageService.getItem('rule_ids');
+
+            // 获取用户会话信息
+            this.user = this.sessionStorageService.getItem('user');
+            this.token = this.sessionStorageService.getItem('token');
+            this.money = this.sessionStorageService.getItem('money');
+
             this.order.order_no = Guid.newGuid();
             this.order.keywords = this.keywords;
             const arr = [];
@@ -168,8 +179,15 @@ export class OrderComponent implements OnInit {
                 this.order.errors.phone = true;
                 return;
             }
+
+            console.log(this.orderForm)
+
         }
-        this.order.total_amount = 0.01;
+        // this.order.total_amount = 0.01;
+        // 将用户会话信息写入表单，进行提交
+        this.orderForm['user'] = this.user;
+        this.orderForm['token'] = this.token;
+        this.orderForm['money'] = this.token;
         const newTab = window.open('about:blank');
         this.orderResource.postOrder(this.order, (result: Result) => {
             // location.href = result.data;
@@ -181,6 +199,7 @@ export class OrderComponent implements OnInit {
 
     search(keywords: string) {
         this.keywords = keywords;
+        console.log(this.token)
         this.router.navigate(['/result', this.keywords]);
     }
 

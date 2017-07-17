@@ -5,7 +5,6 @@ import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-
 import { AngularEchartsModule } from 'ngx-echarts';
 
 import { ResourceModule } from 'ngx-resource';
