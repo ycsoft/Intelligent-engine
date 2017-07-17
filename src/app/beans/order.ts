@@ -20,6 +20,11 @@ export class Order {
     keywords = '';
     errors = <any>{};
 
+    // 添加用户会话信息
+    user = '';
+    token = '';
+    money = '';
+
     constructor() {
 
     }
