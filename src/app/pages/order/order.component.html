@@ -33,7 +33,7 @@
     </div>
 </div>
 <div class="main-container">
-    <app-search-bar (onChange)="search($event)"></app-search-bar>
+    <app-search-bar (onChange)="search($event)" [money]="money"></app-search-bar>
     <div class="result-container">
         <div class="result-container1">
             <div class="result-container2">
@@ -71,8 +71,8 @@
                     </div>
                     <form class="content" #orderForm="ngForm">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="电子邮件" [(ngModel)]="order.email" name="email" appEmail required>
-                            <label [hidden]="order.errors.email" class="tip"><span style="color:red;">*必填项：购买成功后我们将会发送报告至您的邮箱</span></label>
+                            <input type="text" class="form-control" placeholder="电子邮件" [(ngModel)]="order.email" name="email"> <!--去除appEmail required-->
+                            <label [hidden]="order.errors.email" class="tip"><span style="color:red;">*会员无需填写 (购买成功后我们将会发送报告至您的邮箱)</span></label>
                             <label [hidden]="!order.errors.email" class="tip"><span style="color:red;">*必填项：请填写正确的邮箱</span></label>
                         </div>
                         <div class="invoice-choice" #invoiceChoice (click)="focus()">
@@ -163,6 +163,9 @@
                         <span>支付方式</span>
                     </div>
                     <div class="content">
+                        <div class="pay-way-img">
+                            账户余额
+                        </div>
                         <div class="pay-way-img">
                             <img src="assets/images/icon_zfb.png">
                         </div>

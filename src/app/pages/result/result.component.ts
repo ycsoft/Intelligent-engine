@@ -10,6 +10,8 @@ import { SmallTypeColorService } from 'app/services/small-type-color.service';
 import { AlertService } from "app/services/alert.service";
 import { AlertType } from "app/beans/alert-type.enum";
 
+import {Http} from '@angular/http';
+
 @Component({
     selector: 'app-result-component',
     templateUrl: 'result.component.html',
@@ -88,13 +90,14 @@ export class ResultComponent implements OnInit {
     totalMoney = 0;
 
     keywords = '';
-    user = undefined
+    user = undefined;
     token = undefined;
     money = 0;
 
     result = null;
 
     chartData = undefined;
+    tipsHide = false;
 
     constructor(private dataService: DataService,
         private chartDataService: ChartDataService,
@@ -103,26 +106,36 @@ export class ResultComponent implements OnInit {
         private router: Router,
         private sessionStorageService: SessionStorageService,
         private smallTypeColorService: SmallTypeColorService,
-        private alertService: AlertService) {
+        private alertService: AlertService,
+        private http:Http) {
     }
 
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
+
             this.keywords = params['keywords'];
             this.user = params['user'];
             this.token = params['token'];
-            this.money = params['money'];
 
-            console.log(this.keywords);
-            console.log(this.user);
-            console.log(this.token);
-            console.log(this.money);
+            if (this.token === 'undefined') {
+                this.token = '';
+                this.money = 0;
+                this.user = '未登陆';
+            }
+
+            //
+            // 用户的剩余金额从服务端获取
+            //
+            this.http.get('http://localhost:8002/money/' + this.user + '/' + this.token).toPromise().then( resp => {
+                const data = resp.json();
+                this.money = data['money'];
+                this.sessionStorageService.setItem('money',this.money);
+            });
 
             //
             // 保存用户会话信息
             this.sessionStorageService.setItem('user',this.user);
             this.sessionStorageService.setItem('token',this.token);
-            this.sessionStorageService.setItem('money',this.money);
             // this.dataService.search(this.keywords).then((result) => {
             //     const data = this.chartDataService.getChartData(result);
             //     this.freeOne = this.chartDataService.getFree(result);
@@ -130,6 +143,7 @@ export class ResultComponent implements OnInit {
             //     this.chartlist.push(this.freeOne);
             // });
             this.search(this.keywords);
+
         });
     }
 
@@ -194,8 +208,14 @@ export class ResultComponent implements OnInit {
     }
 
     aboutMe() {
-        var url = 'http://localhost:8080/#/orders/' + this.user + '/' + this.token + '/' + this.money
-        let nw = window.open(url);
+        console.log(this.token);
+        if (this.token === '') {
+            const login = 'http://localhost:8080/#/login';
+            window.open(login);
+        } else {
+            const url = 'http://localhost:8080/#/orders/' + this.user + '/' + this.token + '/' + this.money
+            window.open(url);
+        }
     }
 
     onChartClick(event) {

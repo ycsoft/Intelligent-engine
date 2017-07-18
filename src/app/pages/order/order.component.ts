@@ -179,27 +179,35 @@ export class OrderComponent implements OnInit {
                 this.order.errors.phone = true;
                 return;
             }
-
-            console.log(this.orderForm)
-
         }
         // this.order.total_amount = 0.01;
+        //
         // 将用户会话信息写入表单，进行提交
-        this.orderForm['user'] = this.user;
-        this.orderForm['token'] = this.token;
-        this.orderForm['money'] = this.token;
+        //
+        this.order.user = this.user;
+        this.order.token = this.token;
+        this.order.money = this.money;
+
         const newTab = window.open('about:blank');
         this.orderResource.postOrder(this.order, (result: Result) => {
+            console.log('请求已发送');
+            console.log(result);
+
+            newTab.location.href = result.data['url'];
+            console.log(result.data['money']);
+
+            this.money = result['money'];
+            this.sessionStorageService.setItem('money', result['money']);
             // location.href = result.data;
-            newTab.location.href = result.data;
+            // newTab.location.href = result.data;
             // window.open(result.data, '_blank');
-            console.log('url:', result.data);
+            // console.log('url:', result.data);
         });
     }
 
     search(keywords: string) {
         this.keywords = keywords;
-        console.log(this.token)
+        console.log(this.token);
         this.router.navigate(['/result', this.keywords]);
     }
 

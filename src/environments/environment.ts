@@ -5,7 +5,7 @@
 
 export const environment = {
     production: false,
-    // server1: 'http://10.200.187.166:8888'
-    server1: 'http://116.62.168.168:8888',
+    server1: 'http://10.200.187.166:8888',
+    // server1: 'http://116.62.168.168:8888',
     mianPage: 'http://localhost:4200/dynamic/start/search.html'
 };

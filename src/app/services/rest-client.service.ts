@@ -53,9 +53,15 @@ export class RestClient extends Resource {
                     //     localStorage.setItem('token', newToken);
                     //   }
                     // }
+                    console.log(res);
                     this.alertService.loading(false);
                     const result = ((<any>res)._body ? res.json() : {}) as Result;
                     if (result.code !== undefined) {
+
+                        subscriber.next(result);
+                        /*
+                        * result的code值本身具有逻辑意义，不可统一按错误处理
+                        *
                         if (result.code === 0) {
                             subscriber.next(result);
                         } else {
@@ -66,6 +72,7 @@ export class RestClient extends Resource {
                             this.alertService.alert(alert);
                             subscriber.error(res);
                         }
+                        */
                     } else {
                         const result1 = (<any>res)._body ? res.json() : {};
                         subscriber.next(result1);

@@ -5,7 +5,7 @@ import { OrderComponent } from 'app/pages/order/order.component';
 
 const routes: Routes = [
     {
-        path: 'result/:keywords/:user/:token/:money',
+        path: 'result/:keywords/:user/:token',
         component: ResultComponent
     },
     {

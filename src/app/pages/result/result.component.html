@@ -16,7 +16,7 @@
                 <div class="header-container">
                     <div class="tab-header" (click)="reportState='state1'" [ngClass]="{'active':reportState==='state1'}" (click)="changeContentPage(1)">购买列表</div>
                     <div class="tab-header"  [ngClass]="{'active':reportState==='state2'}" (click)="changeContentPage(2)">应用案例</div>
-                    <div class="tab-header" (click)="aboutMe()">我的</div>
+                    <div class="tab-header" (click)="aboutMe()" [hidden]="tipsHide">{{user}} :<label id="money"> ￥{{money}}</label></div>
                     <div class="active-header" [@reportState]="reportState"></div>
                 </div>
             </div>

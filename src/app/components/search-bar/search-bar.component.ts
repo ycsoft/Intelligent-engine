@@ -11,6 +11,10 @@ export class SearchBarComponent implements OnInit {
 
     private ENTER = 13;
 
+    user = '';
+    token = '';
+    @Input() money = 0;
+
     @Input() keywords = '';
 
     @Output() onChange = new EventEmitter<string>();
@@ -19,15 +23,38 @@ export class SearchBarComponent implements OnInit {
         private router: Router) { }
 
     ngOnInit() {
+        this.refresh();
     }
 
     submit() {
         this.search();
     }
+    computed() {
+        this.refresh();
+    }
+
+    refresh() {
+        const user = this.sessionStorageService.getItem('user');
+        const token = this.sessionStorageService.getItem('token');
+        const money = this.sessionStorageService.getItem('money');
+
+        this.user = user;
+        this.token = token;
+        // this.money = money;
+    }
 
     keypress($event) {
         if ($event.keyCode === this.ENTER) {
             this.search();
+        }
+    }
+
+    aboutMe() {
+        if (this.token === '') {
+            window.open('http://localhost:8080/#/login');
+        }else{
+            var url = 'http://localhost:8080/#/orders/' + this.user + '/' + this.token + '/' + this.money
+            window.open(url);
         }
     }
 
@@ -38,6 +65,10 @@ export class SearchBarComponent implements OnInit {
         const user = this.sessionStorageService.getItem('user');
         const token = this.sessionStorageService.getItem('token');
         const money = this.sessionStorageService.getItem('money');
+
+        this.user = user;
+        this.token = token;
+        this.money = money;
 
         console.log(token)
         const url = '/result/' + this.keywords + '/' + user + '/' + token + '/' + money;

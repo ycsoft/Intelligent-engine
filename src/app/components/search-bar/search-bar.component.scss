@@ -4,6 +4,16 @@
     position: absolute;
     left: 0;
     padding-left: 70px;
+    span{
+        position: absolute;
+        right: 50px;
+        top: 15px;
+        cursor: pointer;
+    }
+    label {
+        color: #f00;
+        cursor: pointer;
+    }
     .search-container{
         background-color: #f2f5ff;
         height: 50px;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
+import { SessionStorageService } from 'app/services/session-storage.service';
 
 @Component({
     selector: 'app-logo',
@@ -8,13 +9,21 @@ import { environment } from 'environments/environment';
 })
 export class LogoComponent implements OnInit {
 
-    constructor() { }
+    user = '';
+    token = '';
+    money = '';
+
+    constructor(private sessionStorage: SessionStorageService) { }
 
     ngOnInit() {
     }
 
     goMain() {
-        location.href = environment.mianPage;
+        this.user = this.sessionStorage.getItem('user');
+        this.token = this.sessionStorage.getItem('token');
+        this.money = this.sessionStorage.getItem('money');
+
+        location.href = 'http://localhost:8080/#/home/' + this.user + '/' + this.token + '/' + this.money;
     }
 
 }
